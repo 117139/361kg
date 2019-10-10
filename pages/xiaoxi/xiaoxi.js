@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    index_tab:[
+      1,1,1,
+    ]
   },
 
   /**
@@ -47,7 +49,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    
+    // 停止下拉动作
+    wx.stopPullDownRefresh();
   },
 
   /**

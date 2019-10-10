@@ -1,12 +1,15 @@
 {
   "pages": [
+    "pages/sousuo/index",
+    "pages/xiaoxi/xiaoxi",
     "pages/my/my",
     "pages/index/index",
     "pages/login/login",
-    "pages/logs/logs",
-    "pages/xiaoxi/xiaoxi"
+    "pages/logs/logs"
   ],
   "window": {
+		"enablePullDownRefresh": true,
+		"backgroundTextStyle": "dark",
     "backgroundTextStyle": "light",
     "backgroundColor": "#eee",
     "navigationBarBackgroundColor": "#F4B200",
@@ -36,7 +39,7 @@
         "selectedIconPath": "/static/images/btn3.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/sousuo/index",
         "text": "搜索",
         "iconPath": "/static/images/btn4.png",
         "selectedIconPath": "/static/images/btn41.png"

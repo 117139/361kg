@@ -1,4 +1,16 @@
 <!--pages/xiaoxi/xiaoxi.wxml-->
 <view class="container">
-	<view class="xx_list"></view>
+	<view class="xx_list"	wx:for="{{index_tab}}" 
+    wx:for-index="idx" 
+    wx:for-item="item" 
+    wx:key="idx">
+		<view class="w100 xx_li_tit oh2">专业化分工日趋细致的背景下，整车厂商由传统的纵向经营、追求大而全的生产模式向精简机产模式向精简机构…</view>
+		<view class="li_inr_box">
+			<view class="li_inr">评论内容：{{'这款性能挺不错的，今天刚联系看过。'}}</view>
+		</view>
+		<view class="li_time">
+			<view>09-15  22:16</view>
+			<view>88赞</view>
+		</view>
+	</view>
 </view>

@@ -1,0 +1,96 @@
+/* pages/index/index.wxss */
+.index_box{
+  background-color: #fff;
+}
+.index_scroll{
+	width: 750rpx;
+	white-space: nowrap;
+	/* height: 75rpx; */
+	/* border-bottom: 1px solid #EEEEEE; */
+	padding: 32rpx 15rpx;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.index_tab{
+  display: inline-flex;
+	white-space:nowrap;
+	font-size: 28rpx;
+	justify-content: center;
+	padding: 9rpx 32rpx;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+  background:rgba(247,247,247,1);
+  border-radius:23px;
+	margin-right: 20rpx;
+}
+.icur{
+	/* font-size: 32rpx; */
+	color: #FFFFFF;
+  background:#F4B200;
+}
+.ib_1{
+	width: 100%;
+	margin-top: 30rpx;
+	margin-bottom: 22rpx;
+	padding: 0 32rpx;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	text-align: right;
+}
+.ib_1 picker{
+	display: inline-block;
+	margin-left: 30rpx;
+}
+.ib_1_type{
+	display: inline-block;
+	font-size:26rpx;
+	font-family:Microsoft YaHei;
+	font-weight:400;
+	color:rgba(244,178,0,1);
+}
+.index_list{
+	width: 100%;
+	padding: 32rpx;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+
+
+/*sousuo*/
+.sousuo_box1{
+  width: 100%;
+  padding: 32rpx 32rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2rpx solid #f8f8f8;
+}
+.ssrr_box{
+  width:100%;
+  padding: 0 30rpx;
+  height:64rpx;
+  background:rgba(255,255,255,1);
+  border:1px solid rgba(229,229,229,1);
+  border-radius:32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ssrr_box input{
+  flex: 1;
+  font-size:28rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+}
+.iconsousuo{
+  font-size: 40rpx;
+  color: #BBBBBB;
+}

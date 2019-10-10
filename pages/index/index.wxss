@@ -62,7 +62,7 @@
 }
 .index_list{
 	background-color: #fff;
-	margin-bottom: ;
+	/* margin-bottom: ; */
 }
 .li_tx_box{
 	width: 72rpx;
