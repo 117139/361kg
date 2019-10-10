@@ -1,0 +1,332 @@
+/**app.wxss**/
+@font-face {
+    font-family:"iconfont";
+    src: url('//at.alicdn.com/t/font_1451092_kaj1scrjbtg.eot?t=1570697834616');
+    /* IE9 */
+    src: url('//at.alicdn.com/t/font_1451092_kaj1scrjbtg.eot?t=1570697834616#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAP0AAsAAAAACCgAAAOoAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDHAqDXIMZATYCJAMQCwoABCAFhG0HThsRB8gOJQmRwMAwAANMPHytZe/39E46hAoUg+Xy4fKEQq+NAmfh7ow+YdiIDP+e9ooRGZjJag8qXrpUaXBWt08B90uh/3M5vWs8D2x+O8tlzWE3qUUBJhjYGMs3aFpAWWLeMHZBS9xPoM0of6y9zPxyoCszhwXiAZcIgG7GITfwQjHXFXOzeAVaSnpmnwW8BJ+P/2AldEkaFXPs/lWGGCT/4r4w4TQ1TbDKcwH1dD6wRVSYA2TipjJwhhMV5nC0qd/h2gAUReIX97nyhYlGA1VHMRTrL48kVETNxHeANVSs+MV1MBK/lBjBbxOjh2RnU4lKb4BPzB1+agipngoOo8UGEkx/a0XtIFIxe827vKYBWd56NpJXp7YsnznvvLK+yYo3dCOKXz9szR+vUqg9eXWltB710lCbPb+eR7umj3iFk6z5zUeqFm0rapGK3sXOjjGksFNjy8CMsMqjotagqhWlqd2aX7+7ri6K9i3Z8QKqusayvGHBvbzG1O3qZm21wTKdYs3vb9p56WKzff6lS83A7Wg18VYhePTbIwtJb5ldaKp28uVG4UEPtl53uO5SgvAoX65TdVPpU1qQ9KzfHpdIBfHWNR18lyKxRxW06JjC18e0tc7d44WdpL3bfIJVRN91IbOEV/qbwtX9vjWLTL8AXfSpo6+tBzPweOFe2+ast2Dte1oVwtV5d/B4H3la0zNYYYRUrnvkKvStgbc892rvjYQ3a3xFj10EfMSI1z3w8ZSn53vDYR3u8mlVLFAB+BrjRHHKND81G7i6VZOWajlvOIof2s/Yx9fja03iv5X2B0r/PGYhDSq6K/+KUlX+PlsGDchPjaY2nTkreo0mbveU7HxwLqHNivCFIn3uT2EaVPGEYjCBpMUIVIoxNHPnoKHdGtSKTWgzK2txu34UjsitmLEfQOgxDkmXH1DpcQ7N3HvQMOQd1HqCA21Ow2LNdhOB66dRUMBAMSrcjOIiQonZbkY/JJZCyXq5gEqrAz4PUjSeRkMCg/PlLKiE1BQT6A2SUIbBUIwiFGgmOAzK5QSqoggpFDGBlQyjig0KwqouFCgiFEDfLgokwIDEUEKboXAiBCXMa83QL7y/FCSxnpwA1VBTleSBKDS8fVSIQMEd0CyDslPNrXSmbSARisHA8CAMhaCAyoQ+SG4VCChVdS8pSIQRqHJATiVWEGqGdTUELm9SvEA5a8D8RY4UVeRoyE9wE6O/cb0UFxCbcKXENGaEBIgI1WYAAA==') format('woff2'), url('//at.alicdn.com/t/font_1451092_kaj1scrjbtg.woff?t=1570697834616') format('woff'), url('//at.alicdn.com/t/font_1451092_kaj1scrjbtg.ttf?t=1570697834616') format('truetype'),
+    /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url('//at.alicdn.com/t/font_1451092_kaj1scrjbtg.svg?t=1570697834616#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+.iconfont {
+    font-family:"iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.iconnext:before {
+    content:"\e66e";
+}
+.iconwujiaoxing:before {
+    content:"\e604";
+}
+.iconwujiaoxing1-copy:before {
+    content:"\e70f";
+}
+
+
+
+view{
+  -webkit-overflow-scrolling: touch;
+}
+
+page{
+  background: #eee;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.container {
+	font-family: MicrosoftYaHei;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+  /* padding: 200rpx 0; */
+  box-sizing: border-box;
+  background: #eee;
+} 
+
+.w100{
+	width: 100%;
+	
+}
+.w100r{
+	width: 100rpx;
+}
+.hengxian{
+	width: 100%;
+	height: 20rpx;
+	background-color: #eee;
+}
+.h100{
+	height: 100rpx;
+}
+.bb1d0{
+	border-bottom: 1px solid #d0d0d0;
+}
+.tac{
+	text-align: center;
+}
+.tar{
+	text-align: right;
+}
+.dis_flex{
+  display: flex;
+}
+.flex_dc{
+	flex-direction: column;
+}
+.aic{
+	align-items: center;
+}
+.ais{
+	align-items: stretch;
+}
+.flex_1{
+  flex: 1;
+}
+.flex_ww{
+	flex-wrap: wrap;
+}
+.aic{
+  align-items: center;
+}
+.ju_c{
+  justify-content: center;
+}
+.ju_b{
+  justify-content: space-between;
+}
+.ju_a{
+  justify-content: space-around;
+}
+.fwb{
+  font-weight: bold;
+}
+.clearfix:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.bgfff{
+	background-color: #fff;
+}
+.oh1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.oh2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.oh3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.oh4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+.boxsiz{
+	box-sizing: border-box;
+}
+/*删除线*/
+.scx{
+	text-decoration:line-through;
+}
+/*color*/
+.c0{
+	color: #000;
+}
+.cf{
+	color: #fff;
+}
+.c3{
+	color: #333;
+}
+.c30{
+	color: #303030;
+}
+.ce{
+	color: #eee;
+}
+.cc2{
+	color: #c2c2c2;
+}
+.c6{
+	color: #666;
+}
+.c9{
+	color: #999;
+}
+.cddd{
+	color: #ddd;
+}
+.cf33c7b{
+	/* color: #f33c7b; */
+	color: #f75852;
+}
+.cf6377a{
+	/* color: #f6377a; */
+	color: #f75852;
+}
+.cffb719{
+	color: #ffb719;
+}
+.cDAB26C{
+	color: #DAB26C;
+}
+.cE42929{
+	color: #E42929;
+}
+.c75CEC6{
+	color: #75CEC6;
+}
+/*fontsize*/
+.fz14{
+	font-size: 14rpx;
+}
+.fz20{
+	font-size: 20rpx;
+}
+.fz22{
+	font-size: 22rpx;
+}
+.fz24{
+	font-size: 24rpx;
+}
+.fz26{
+	font-size: 26rpx;
+}
+.fz28{
+	font-size: 28rpx;
+}
+.fz30{
+	font-size: 30rpx;
+}
+.fz32{
+	font-size: 32rpx;
+}
+.fz34{
+	font-size: 34rpx;
+}
+.fz40{
+	font-size: 40rpx;
+}
+.fz48{
+	font-size: 48rpx;
+}
+.fz50{
+	font-size: 50rpx;
+}
+.fz60{
+	font-size: 60rpx;
+}
+.fz100{
+	font-size: 100rpx;
+}
+.fz140{
+	font-size: 120rpx;
+}
+/*margin*/
+.mt15{
+	margin-top: 15rpx;
+}
+.mr5{
+	margin-right: 5rpx; 
+}
+.mr10{
+	margin-right: 10rpx;
+}
+.mr20{
+	margin-right: 20rpx;
+}
+.ml10{
+	margin-left: 10rpx;
+}
+.mr30{
+	margin-right: 30rpx;
+}
+.mb10{
+	margin-bottom: 10rpx;
+}
+.mb20{
+	margin-bottom: 20rpx;
+}
+.mb40{
+	margin-bottom: 40rpx;
+}
+.mt50{
+	margin-top: 50rpx;
+}
+.mb50{
+	margin-bottom: 50rpx;
+}
+.mb100{
+	margin-bottom: 100rpx;
+}
+/*padding*/
+.pt10{
+	padding-top: 10rpx;
+}
+.pl10{
+	padding-left: 10rpx;
+}
+.p20{
+  padding: 20rpx;
+}
+.pt20{
+	padding-top: 20rpx;
+}
+.pt30{
+	padding-top: 30rpx;
+}
+.pt40{
+	padding-top: 40rpx;
+}
+.pb10{
+	padding-bottom: 10rpx;
+}
+.pb15{
+	padding-bottom: 15rpx;
+}
+.pb20{
+	padding-bottom: 20rpx;
+}
+.pb30{
+	padding-bottom: 30rpx;
+}
+.pb40{
+	padding-bottom: 40prx;
+}
+
+.pb100{
+	padding-bottom: 100rpx;
+}
+.pb160{
+	padding-bottom: 160rpx;
+}
+/**/
+.lh50{
+	line-height: 50rpx;
+}

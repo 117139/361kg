@@ -1,0 +1,4 @@
+<!--pages/xiaoxi/xiaoxi.wxml-->
+<view class="container">
+	<view class="xx_list"></view>
+</view>

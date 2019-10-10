@@ -1,0 +1,76 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+	<view class="index_box">
+		<scroll-view scroll-x="true" class="index_scroll">
+			<view	wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx"
+				class="index_tab {{idx==cur?'icur':''}}">{{item}}</view>
+		</scroll-view>
+		<view class="ib_1">
+			<picker bindchange="bindPickerChange" data-idx='1' value="{{index1}}" range="{{array1}}">
+				<view class="ib_1_type">分类</view>
+			</picker>
+			
+			<picker bindchange="bindPickerChange" data-idx='2' value="{{index2}}" range="{{array2}}">
+				<view class="ib_1_type">标签</view>
+			</picker>
+			<picker bindchange="bindPickerChange" data-idx='3' value="{{index3}}" range="{{array3}}">
+				<view class="ib_1_type">区域</view>
+			</picker>
+		</view>
+	</view>
+	<view class="w100">
+		<block wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx">
+			<view class="index_list" >
+				<view class="li_box1">
+					<view class="li_tx_box">
+						<view class="li_tx_img">
+							<image src="../../static/images/tx.png"></image>
+						</view>
+						<image class="li_user_rz" src="../../static/images/rz.png"></image>
+						<image class="li_user_rz" src="../../static/images/btn2.png"></image>
+					</view>
+					<view class="li_user_msg">
+						<view class="lum1">章鱼船长</view>
+						<view class="lum2">北京</view>
+					</view>
+					<view class="li_guanzhu {{idx==2?'ygz':''}}">{{'+关注'}}</view>
+				</view>
+				<view class="li_box2">{{'二手N18，N21启动马达，检修好的，已更换损坏零部件，实验正常.直接安装使用，现货供应，批发更优惠！'}}</view>
+				<scroll-view wx:if="{{array3}}" class='li_imgBox' scroll-x>
+					<image class='li_imgone'
+						wx:for="{{filter.getgimgarr(item.pic)}}" 
+						wx:for-index="idx" 
+						wx:for-item="item1" 
+						wx:key="idx" 
+						src='{{filter.imgIP(item1)}}' 
+						data-src="{{filter.imgIP(item1)}}"
+						data-array="{{filter.getgimgarrIP(item.pic)}}"
+						mode="aspectFill" catchtap='pveimg' ></image>
+				</scroll-view>
+				<view class="li_box4">
+					<view class="li_box4_one">
+						<image src="../../static/images/dz.png" style="width: 28rpx;height: 28rpx;"></image>
+						<text>1356</text>
+					</view>
+					<view class="li_box4_one">
+						<image src="../../static/images/pl.png" style="width: 32rpx;height: 28rpx;"></image>
+						<text>758</text>
+					</view>
+					<view class="li_box4_one">
+						<image src="../../static/images/lx.png" style="width: 28rpx;height: 28rpx;"></image>
+						<text>联系TA</text>
+					</view>
+				</view>
+			</view>
+			
+			<image class="igg_img" wx:if="{{idx%2==0}}" src="../../static/images/banner.png"></image>
+			<view wx:else class="hengxian"></view>
+		</block>
+	</view>
+</view>

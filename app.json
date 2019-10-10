@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/my/my",
+    "pages/index/index",
+    "pages/login/login",
+    "pages/logs/logs",
+    "pages/xiaoxi/xiaoxi"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#eee",
+    "navigationBarBackgroundColor": "#F4B200",
+    "navigationBarTitleText": "361KG",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#3C3C3C",
+    "selectedColor": "#F4B200",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/static/images/btn1.png",
+        "selectedIconPath": "/static/images/btn11.png"
+      },
+      {
+        "pagePath": "pages/xiaoxi/xiaoxi",
+        "text": "消息",
+        "iconPath": "/static/images/btn2.png",
+        "selectedIconPath": "/static/images/btn21.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "发布",
+        "iconPath": "/static/images/btn3.png",
+        "selectedIconPath": "/static/images/btn3.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "搜索",
+        "iconPath": "/static/images/btn4.png",
+        "selectedIconPath": "/static/images/btn41.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "/static/images/btn5.png",
+        "selectedIconPath": "/static/images/btn51.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}
