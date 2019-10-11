@@ -1,0 +1,20 @@
+<!--pages/lxwm/lxwm.wxml-->
+<view class='container'>
+  <view class='lxwm_box1'>
+    <view class='lxwm_b1'>
+      <view class='lxwm_tit'>361KG</view>
+      <view class='lxwm_jj'>广州361KG信息服务平台</view>
+      <view class='lxwm_jj'>主要服务模具加工制造业企业和个体</view>
+    </view>
+    <view class='lxwm_b2' data-tel="{{'1111111'}}" catchtap='call'>
+      <view class='lx_b2_msg'>
+        <view class='lx_msg1'>联系人  王生 
+          <text class='fz26 c6'>13711574965</text>
+        </view>
+        <view class='lx_msg2'>如有需要业务帮助，可以拨打电话，微信同步</view>
+      </view>
+      <text class='iconfont iconnext' style='color:#DDDDDD'></text>
+    </view> 
+  </view>
+  
+</view>

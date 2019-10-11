@@ -1,0 +1,84 @@
+<!--pages/index/index.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view class="container">
+  <view class='my_box1'>
+    <image wx:if="{{!userInfo.nickName}}"
+      class="user_tx" src="/static/images/tx.jpg" 
+      data-url="/pages/login/login" bindtap='jump'></image>
+    <image wx:if="{{userInfo.nickName}}" class="user_tx" src='{{userInfo.avatarUrl}}'></image>
+    <view class='my_user_msg' wx:if="{{userInfo.nickName}}">
+      <view class='mum1'>{{'小仙女'}} <image class="rz_type" src='../../static/images/rz0.png'></image></view>
+      <!-- <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}"> -->
+        <view class='mum2'>{{'北京东城区'}} 
+          <!-- <text class='my_add_qh'>切换城市</text> -->
+        </view>
+      <!-- </picker> -->
+    </view>
+    <view class='gozy' wx:if="{{userInfo.nickName}}">
+      
+    </view>
+    
+  </view>
+	<view class='my_box2'>
+    <view class='mb2_one'>
+      <view class='mb2_one1'>12</view>
+      <view class='mb2_one2'>粉丝</view>
+    </view>
+    <view class='mb2_one'>
+      <view class='mb2_one1'>12</view>
+      <view class='mb2_one2'>关注</view>
+    </view>
+    <view class='mb2_one'>
+      <view class='mb2_one1'>12</view>
+      <view class='mb2_one2'>获赞</view>
+    </view>
+  </view>
+	<view class="w100">
+		<block wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx">
+			<view class="index_list" >
+				<view class='list_time'>09-15  22:16</view>
+				<view class="li_box2">{{'二手N18，N21启动马达，检修好的，已更换损坏零部件，实验正常.直接安装使用，现货供应，批发更优惠！'}}</view>
+				<scroll-view wx:if="{{array3}}" class='li_imgBox' scroll-x>
+					<!-- <image class='li_imgone'
+						wx:for="{{filter.getgimgarr(item.pic)}}" 
+						wx:for-index="idx" 
+						wx:for-item="item1" 
+						wx:key="idx" 
+						src='{{filter.imgIP(item1)}}' 
+						data-src="{{filter.imgIP(item1)}}"
+						data-array="{{filter.getgimgarrIP(item.pic)}}"
+						mode="aspectFill" catchtap='pveimg' ></image> -->
+          <image class='li_imgone'
+            wx:for="{{aaa}}" 
+            wx:for-index="idx" 
+            wx:for-item="item1" 
+            wx:key="idx" 
+            src='{{item1}}' 
+            data-src="{{item1}}"
+            data-array="{{aaa}}"
+            mode="aspectFill" catchtap='pveimg' ></image>
+				</scroll-view>
+				<view class="li_box4">
+					<view class="li_box4_one">
+						<image src="../../static/images/dz.png" style="width: 28rpx;height: 28rpx;"></image>
+						<text>1356</text>
+					</view>
+					<view class="li_box4_one">
+						<image src="../../static/images/sc.png" style="width: 28rpx;height: 28rpx;"></image>
+						<text>1356</text>
+					</view>
+					<view class="li_box4_one">
+						<image src="../../static/images/pl.png" style="width: 32rpx;height: 28rpx;"></image>
+						<text>758</text>
+					</view>
+				</view>
+			</view>
+			
+			<!-- <image class="igg_img" wx:if="{{idx%2==0}}" src="../../static/images/banner.png"></image> -->
+			<view class="hengxian"></view>
+		</block>
+	</view>
+</view>

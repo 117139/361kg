@@ -8,61 +8,63 @@
     <image wx:if="{{userInfo.nickName}}" class="user_tx" src='{{userInfo.avatarUrl}}'></image>
     <view class='my_user_msg' wx:if="{{userInfo.nickName}}">
       <view class='mum1'>{{'小仙女'}} <image class="rz_type" src='../../static/images/rz0.png'></image></view>
-      <view class='mum2'>{{'北京东城区'}} 
-        <text class='my_add_qh'>切换城市</text>
-      </view>
+      <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+        <view class='mum2'>{{'北京东城区'}} 
+          <text class='my_add_qh'>切换城市</text>
+        </view>
+      </picker>
     </view>
-    <view class='gozy' wx:if="{{userInfo.nickName}}">主页
+    <view class='gozy' wx:if="{{userInfo.nickName}}" data-url="/pages/my_index/index" bindtap='jump'>主页
       <text class="iconfont iconnext" style='color:#999;'></text>
     </view>
     <view wx:if="{{!userInfo.nickName}}" class='my_user_msg'
-    data-url="/pages/login/login" bindtap='jump'>
+    data-url="/pages/login/login" bindtap='jump' style='justify-content:center;'>
       登录/注册
     </view>
   </view>
 	<view class='my_box2'>
-    <view class='mb2_one'>
+    <view class='mb2_one' data-url="/pages/my_fs/my_fs" catchtap='jump'>
       <view class='mb2_one1'>12</view>
       <view class='mb2_one2'>粉丝</view>
     </view>
-    <view class='mb2_one'>
+    <view class='mb2_one' data-url="/pages/my_fs/my_fs" catchtap='jump'>
       <view class='mb2_one1'>12</view>
-      <view class='mb2_one2'>粉丝</view>
+      <view class='mb2_one2'>关注</view>
     </view>
     <view class='mb2_one'>
       <view class='mb2_one1'>12</view>
-      <view class='mb2_one2'>粉丝</view>
+      <view class='mb2_one2'>获赞</view>
     </view>
   </view>
   <view class='my_box3'>
-    <view class='mb2_one'>
+    <view class='mb2_one' data-url="/pages/my_sc/my_sc" catchtap='jump'>
       <view class='mb2_one3'>
-        <image src='../../static/images/rz.png'
+        <image src='../../static/images/sc_my.png'
         style='width:40rpx;height:40rpx;'></image>
       </view>
       <view class='mb2_one2'>我的收藏</view>
     </view>
-    <view class='mb2_one'>
+    <view class='mb2_one' data-url="/pages/my_pl/my_pl" catchtap='jump'>
       <view class='mb2_one3'>
-				 <image src='../../static/images/rz.png' style='width:40rpx;height:40rpx;'></image>
+				 <image src='../../static/images/pl_my.png' style='width:40rpx;height:40rpx;'></image>
 			</view>
       <view class='mb2_one2'>我的评论</view>
     </view>
-    <view class='mb2_one'>
+    <view class='mb2_one' data-url="/pages/my_sc/my_sc" catchtap='jump'>
       <view class='mb2_one3'>
-				 <image src='../../static/images/rz.png' style='width:40rpx;height:40rpx;'></image>
+				 <image src='../../static/images/dz3.png' style='width:40rpx;height:40rpx;'></image>
 			</view>
       <view class='mb2_one2'>我的点赞</view>
     </view>
-    <view class='mb2_one'>
+    <view class='mb2_one' data-url="/pages/my_sc/my_sc" catchtap='jump'>
       <view class='mb2_one3'>
-				 <image src='../../static/images/rz.png' style='width:40rpx;height:40rpx;'></image>
+				 <image src='../../static/images/lishi.png' style='width:40rpx;height:40rpx;'></image>
 			</view>
       <view class='mb2_one2'>浏览历史</view>
     </view>
   </view>
 	<view class='my_list_box'>
-    <view class="my_list" data-url="/pages/shoucang/shoucang" bindtap="jump">
+    <view class="my_list" data-url="/pages/my_tel/my_tel" bindtap="jump">
       <view class="list_name">
 				<image src="../../static/images/my_03.png"></image>
         <!-- <text class="iconfont iconwujiaoxing1-copy"></text> -->
@@ -73,26 +75,26 @@
       </view>
       
     </view>
-    <view class="my_list" data-url="/pages/mypl/mypl" bindtap="jump">
+    <view class="my_list" data-url="/pages/my_rz/my_rz" bindtap="jump">
       <view class="list_name">
        <image src="../../static/images/my_06.png"></image>
-        我的评论
+        认证
       </view>
       <view class='fz26 c9 dis_flex aic'>
         未认证<text class="iconfont iconnext"></text>
       </view>
     </view>
-    <view class="my_list" data-url="/pages/lishi/lishi" bindtap="jump">
+    <view class="my_list" data-url="/pages/my_yjfk/yjfk" bindtap="jump">
       <view class="list_name">
        <image src="../../static/images/my_08.png"></image>
-        浏览历史
+        意见反馈
       </view>
       <text class="iconfont iconnext"></text>
     </view>
-    <view class="my_list" data-url="/pages/lishi/lishi" bindtap="jump">
+    <view class="my_list" data-url="/pages/lxwm/lxwm" bindtap="jump1">
       <view class="list_name">
        <image src="../../static/images/my_10.png"></image>
-        浏览历史
+        联系我们
       </view>
       <text class="iconfont iconnext"></text>
     </view>

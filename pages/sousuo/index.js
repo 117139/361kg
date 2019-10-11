@@ -1,4 +1,5 @@
 // pages/index/index.js
+const app=getApp()
 Page({
 
   /**
@@ -13,6 +14,14 @@ Page({
 		index1:'',
 		index2:'',
 		index3:'',
+    aaa: [
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+    ],
   },
 
   /**

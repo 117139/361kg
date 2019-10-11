@@ -1,0 +1,13 @@
+<!--pages/my_tel/my_tel.wxml-->
+<view class='container'>
+  <form class='tel_bd' bindsubmit="formSubmit">
+    <input class='iht mt25' bindinput="bint" placeholder='输入手机号' name='tel'></input>
+    <view class='code_box mt25'>
+      <view class='code_int'>
+        <input class='iht' placeholder='输入验证码' name='code'></input>
+      </view>
+      <view class='fscode' catchtap='getcode'>发送验证码</view>
+    </view>
+    <button class="tj_btn {{tel.length>0?'ok':''}}" formType="submit">提交审核</button>
+  </form>
+</view>

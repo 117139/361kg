@@ -1,0 +1,92 @@
+<!--pages/details/details.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view class="container">
+	<view class="w100">
+	
+    <view class="index_list" id="xq_index">
+      <view class="li_box1" style='padding:32rpx 0;'>
+        <view class="li_tx_box">
+          <view class="li_tx_img">
+            <image src="../../static/images/tx.png"></image>
+          </view>
+          <image class="li_user_rz" src="../../static/images/rz.png"></image>
+          <image class="li_user_rz" src="../../static/images/btn2.png"></image>
+        </view>
+        <view class="li_user_msg">
+          <view class="lum1">章鱼船长</view>
+          <view class="lum2">北京</view>
+        </view>
+        <view class="li_guanzhu {{idx==2?'ygz':''}}">{{'+关注'}}</view>
+      </view>
+      <view class="li_box2">{{'专业化分工日趋细致的背景下，整车厂商由传统的纵向经营、追求大而全的生产模式向精简机构、以开发整车项目为主的专业化生产模式转变，行业内形成了一级零部件供应商、二级零部件供应商、三级零部件供应商等多层次分工的金字塔结构。 一般来说，层级越低，该层级的供应商数量也就越多。而当前零部件生产企业的大型集团化， 已逐步导致整车厂商与一级零部件供应商之间的结构发生相应的变化，一级零部件供应商的数量不断减少。随着零部件企业集团化的不断深化，汽车行业已日益形成少数几家零部件企业垄断了某个零部件的生产，而提供给多家整车厂商的结构。'}}</view>
+      <scroll-view wx:if="{{array3}}" class='li_imgBox' scroll-x>
+        <!-- <image class='li_imgone'
+          wx:for="{{filter.getgimgarr(item.pic)}}" 
+          wx:for-index="idx" 
+          wx:for-item="item1" 
+          wx:key="idx" 
+          src='{{filter.imgIP(item1)}}' 
+          data-src="{{filter.imgIP(item1)}}"
+          data-array="{{filter.getgimgarrIP(item.pic)}}"
+          mode="aspectFill" catchtap='pveimg' ></image> -->
+          <image class='li_imgone'
+          wx:for="{{array3}}" 
+          wx:for-index="idx" 
+          wx:for-item="item1" 
+          wx:key="idx" 
+          src='{{item1}}' 
+          data-src="{{item1}}"
+          data-array="{{array3}}"
+          mode="aspectFill" catchtap='pveimg' ></image>
+      </scroll-view>
+    </view>
+    <view class="hengxian"></view>
+    <view class='pl_box' id="pl_box">
+      <view class='pl_tit'>
+        <view class='pl_pl_tit'>评论（80）</view>
+        <view>点赞（88）</view>
+      </view>
+      <view class='pl_list'
+      	wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx">
+        <view class="li_box1 li_box_my">
+          <view class="li_tx_box">
+            <view class="li_tx_img">
+              <image src="../../static/images/tx.png"></image>
+            </view>
+            <image class="li_user_rz" src="../../static/images/rz.png"></image>
+            <image class="li_user_rz" src="../../static/images/btn2.png"></image>
+          </view>
+          <view class="li_user_msg">
+            <view class="lum_name">章鱼船长</view>
+            <view class="lum_inr">这款性能挺不错的，今天刚联系看过。</view>
+            <view class="lum_time">09-15  22:16</view>
+          </view>
+         
+        </view>
+      </view>
+    </view>
+	</view>
+  <view class='xq_bottom'>
+    <view class='pl_edit' data-url="/pages/gopl/gopl" catchtap='jump'>
+      <text class='iconfont iconbianji'></text>写评论…
+    </view>
+    <view class='xq_czbox' style='width:52rpx;height:45rpx;' catchtap='topl'>
+      <image src='../../static/images/pl.png'></image>
+      <text>88</text>
+    </view>
+    <view class='xq_czbox' style='width:52rpx;height:49rpx;'>
+      <!-- <image src='../../static/images/sc.png'></image> -->
+      <image src='../../static/images/sc1.png'></image>
+    </view>
+    <view class='xq_czbox' style='width:48rpx;height:46rpx;'>
+      <!-- <image src='../../static/images/dz.png'></image> -->
+      <image src='../../static/images/dz1.png'></image>
+    </view>
+    <view class='xq_czbox' style='width:45rpx;height:45rpx;' data-tel="{{'13800000000'}}" catchtap='call'>
+      <image src='../../static/images/lx.png'></image>
+    </view>
+  </view>
+</view>

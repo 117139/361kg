@@ -1,0 +1,17 @@
+<!--pages/my_rz/my_rz.wxml-->
+<view class='container'>
+  <view class='my_rz_li' data-url="/pages/my_rz_gr/my_rz_gr" catchtap='jump'>
+    <view class='my_rz_li1'>
+      <view class='my_rz_li1_1'>个人认证</view>
+      <view class='my_rz_li1_2'>用户个人真实身份的认证</view>
+    </view>
+     <text class='iconfont iconnext' style='color:#DDDDDD'></text>
+  </view>
+  <view class='my_rz_li' data-url="/pages/my_rz_qy/my_rz_qy" catchtap='jump'>
+    <view class='my_rz_li1'>
+      <view class='my_rz_li1_1'>企业认证</view>
+      <view class='my_rz_li1_2'>为企业构建良好的品牌推广</view>
+    </view>
+     <text class='iconfont iconnext' style='color:#DDDDDD'></text>
+  </view>
+</view>

@@ -1,0 +1,16 @@
+<!--pages/fabu/fabu.wxml-->
+<view class='container'>
+  <view class='w100 fb_box'>
+    <view class='fb_one'
+      	wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx"
+        data-url='/pages/fabu1/fabu1?idx={{idx}}'
+        catchtap='jump'>
+        <image src='../../static/images/index1_03.png'></image>
+				<text class="oh1">任务</text>
+    </view>
+    
+  </view>
+</view>

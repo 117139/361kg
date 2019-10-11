@@ -1,0 +1,33 @@
+/* pages/my_rz/my_rz.wxss */
+page,.container{
+  background: #fff;
+}
+.my_rz_li{
+  width: 100%;
+  height: 142rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26rpx 32rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+}
+.my_rz_li1{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+.my_rz_li1_1{
+  font-size:32rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+}
+.my_rz_li1_2{
+  font-size:24rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}

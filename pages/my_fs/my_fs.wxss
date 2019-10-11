@@ -1,0 +1,59 @@
+/* pages/my_fs/my_fs.wxss */
+page,.container{
+  background: #fff;
+}
+.my_box1{
+  width: 100%;
+  padding:32rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+.user_tx{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+}
+.my_user_msg{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 16rpx;
+  padding-bottom: 16rpx;
+  height: 120rpx;
+  box-sizing: border-box;
+}
+.mum1{
+  font-size:32rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:#333;
+}
+.rz_type{
+  width: 26rpx;
+  height: 26rpx;
+  margin-left: 12rpx;
+}
+.my_add_qh{
+  font-size:24rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:rgba(244,178,0,1);
+  margin-left: 20rpx;
+}
+.mum2{
+  font-size:24rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:#999;
+}
+.gozy{
+  font-size:26rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}

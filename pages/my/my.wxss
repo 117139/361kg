@@ -31,6 +31,8 @@ page{
   justify-content: space-between;
   padding-top: 16rpx;
   padding-bottom: 16rpx;
+  box-sizing: border-box;
+  height: 120rpx;
 }
 .mum1{
   font-size:32rpx;

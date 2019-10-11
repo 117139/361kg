@@ -1,0 +1,29 @@
+<!--pages/my_yjfk/yjfk.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view class='container'>
+  <view class='yjfk_box'>
+    <view class='fabu1_box2_sr'>
+      <textarea class='fbb2_sr_sr' bindinput="bint" placeholder='请输入反馈，我们将为您不断改进' maxlength='-1'></textarea>
+
+    </view>
+    <view class="imgbox">
+			<view class="addimg addimg1" wx:for="{{imgb}}" 
+					 wx:for-index="idx"
+					 wx:for-item="item"
+					 wx:key="idx"
+					 data-idx="{{idx}}"
+					 bindtap="imgdel">
+				<image  src="{{filter.imgIP(item)}}" data-src="{{filter.imgIP(item)}}"
+					 mode="aspectFill"></image>
+				<!-- <image  src="{{item}}" data-src="{{item}}"
+					 mode="aspectFill"></image> -->
+			</view>
+			
+			<view wx:if="{{imgb.length<9}}" class="addimg" bindtap="scpic">
+				
+				<image src="../../static/images/upimg.png"></image>
+			</view>
+		</view>
+    <view class='sub_btn' catchtap='fabusub'>提交</view>
+  </view>
+</view>

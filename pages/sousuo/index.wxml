@@ -1,12 +1,13 @@
 <!--pages/index/index.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
 <view class="container">
-<view class='sousuo_box1'>
-  
-  <view class='ssrr_box'>
-    <input placeholder='请输入您要搜索的信息'></input>
-    <text class='iconfont iconsousuo'></text>
+  <view class='sousuo_box1'>
+    
+    <view class='ssrr_box'>
+      <input placeholder='请输入您要搜索的信息'></input>
+      <text class='iconfont iconsousuo'></text>
+    </view>
   </view>
-</view>
 
 	<view class="w100">
 		<block wx:for="{{index_tab}}" 
@@ -30,7 +31,7 @@
 				</view>
 				<view class="li_box2">{{'二手N18，N21启动马达，检修好的，已更换损坏零部件，实验正常.直接安装使用，现货供应，批发更优惠！'}}</view>
 				<scroll-view wx:if="{{array3}}" class='li_imgBox' scroll-x>
-					<image class='li_imgone'
+					<!-- <image class='li_imgone'
 						wx:for="{{filter.getgimgarr(item.pic)}}" 
 						wx:for-index="idx" 
 						wx:for-item="item1" 
@@ -38,7 +39,16 @@
 						src='{{filter.imgIP(item1)}}' 
 						data-src="{{filter.imgIP(item1)}}"
 						data-array="{{filter.getgimgarrIP(item.pic)}}"
-						mode="aspectFill" catchtap='pveimg' ></image>
+						mode="aspectFill" catchtap='pveimg' ></image> -->
+          <image class='li_imgone'
+            wx:for="{{aaa}}" 
+            wx:for-index="idx" 
+            wx:for-item="item1" 
+            wx:key="idx" 
+            src='{{item1}}' 
+            data-src="{{item1}}"
+            data-array="{{aaa}}"
+            mode="aspectFill" catchtap='pveimg' ></image>
 				</scroll-view>
 				<view class="li_box4">
 					<view class="li_box4_one">

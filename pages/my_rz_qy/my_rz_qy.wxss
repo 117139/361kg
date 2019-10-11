@@ -1,0 +1,76 @@
+/* pages/my_rz_gr/my_rz_gr.wxss */
+.main_box{
+  width: 100%;
+  padding: 30rpx 32rpx;
+  box-sizing: border-box;
+}
+.int_tit{
+  font-size:30rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:#333333;
+  margin-bottom: 32rpx;
+}
+.int_tit text{
+  color: #DF2E1C;
+}
+.int_int{
+  margin-bottom: 40rpx;
+  width:686rpx;
+  height:88rpx;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  background:rgba(255,255,255,1);
+  border:1px solid rgba(238,238,238,1);
+  border-radius:4rpx 10rpx 10rpx 10rpx;
+}
+.tj_btn{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width:750rpx;
+  height:98rpx;
+  border-radius: 0;
+  border:0;
+  background:rgba(244,178,0,1);
+  font-size:32rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
+.sfz_box{
+  display: flex;
+  justify-content: space-between;
+}
+.sfz_one{
+  width: 330rpx;
+}
+.sfz_one image{
+  display: block;
+  width: 100%;
+  height: 208rpx;
+}
+.sfz_one view{
+  width: 100%;
+  margin-top: 10rpx;
+  text-align: center;
+  font-size:24rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.int_int_hidden{
+  width: 0;
+  height: 0;
+}
+.sfz_one1{
+  width: 330rpx;
+  font-size:24rpx;
+  font-family:Microsoft YaHei;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:36rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}

@@ -17,10 +17,10 @@ App({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           console.log('已经授权')
     			wx.getUserInfo({
-    				success(res) {
-    					that.globalData.userInfo = res.userInfo
+    				success(back) {
+              that.globalData.userInfo = back.userInfo
     					console.log(that.globalData.userInfo)
-    					wx.setStorageSync('userInfo', res.userInfo)
+              wx.setStorageSync('userInfo', back.userInfo)
     					if(!that.globalData.userInfo){
     						// wx.reLaunch({
     						//   url: '/pages/login/login',
@@ -30,23 +30,20 @@ App({
     						// })
     					}else{
     						// that.dologin()
-								return
+								// return
                 wx.login({
-                  success: function (res) {
+                  success: function (result) {
                     // 发送 res.code 到后台换取 openId, sessionKey, unionId
                     var uinfo = that.globalData.userInfo
                     let data = {
-                      key: 'server_mima',
-                      code: res.code,
-                      apipage: 'login',
+                      code: result.code,
                       nickname: uinfo.nickName,
-                      headpicurl: uinfo.avatarUrl,
-                      homeid: 1   //0用户端，1师傅端
+                      avatar: uinfo.avatarUrl,
                     }
-                    let rcode = res.code
-                    console.log(res.code)
+                    let rcode = result.code
+                    console.log(result.code)
                     wx.request({
-                      url: that.IPurl,
+                      url: that.IPurl + '/api/login/login',
                       data: data,
                       header: {
                         'content-type': 'application/x-www-form-urlencoded'
@@ -55,17 +52,14 @@ App({
                       method: 'POST',
                       success(res) {
                         console.log(res.data)
-                        if (res.data.error == 0) {
+                        if (res.data.code == 1) {
                           console.log('登录成功')
-                          wx.setStorageSync('tokenstr', res.data.tokenstr)
-                          wx.setStorageSync('member', res.data.member)
-                          wx.setStorageSync('zprice', res.data.price)
+                          wx.setStorageSync('userInfo', back.userInfo)
+                          wx.setStorageSync('token', res.data.data)
                         } else {
                           wx.removeStorageSync('userInfo')
                           wx.removeStorageSync('userWxmsg')
-                          wx.removeStorageSync('tokenstr')
-                          wx.removeStorageSync('member')
-                          wx.removeStorageSync('zprice')
+                          wx.setStorageSync('token', res.data.data)
                           wx.showToast({
                             icon: 'none',
                             title: '登录失败',
@@ -184,6 +178,11 @@ App({
 	    urls: urls1 // 需要预览的图片http链接列表
 	  })
 	},
+  call(e) {
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.tel
+    })
+  },
 	data: {
 			haveLocation: false,
 			activity_lat: -1,

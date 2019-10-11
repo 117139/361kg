@@ -1,0 +1,24 @@
+<!--pages/my_rz_gr/my_rz_gr.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view class='container'>
+  <form class='main_box' bindsubmit="formSubmit">
+    <view class='int_tit'>
+      <text>*</text>请输入企业名称
+    </view>
+    <input class='int_int' name="name"></input>
+    
+    <view class='int_tit'>
+      <text>*</text>上传企业工商营业执照
+    </view>
+    <view class='sfz_box'>
+      <view class='sfz_one' data-num="1" bindtap="scpic">
+				<image src="{{imgb[0]?filter.imgIP(imgb[0]):'../../static/images/sfz_z.png'}}"></image>
+      </view>
+      <view class='sfz_one1' data-num="2">
+      	（请上传中国大陆工商局或市场监督管理局颁发的最新工商营业执照）
+      </view>
+    </view>
+    <input class='int_int_hidden' name="sfz_z" value='{{imgb[0]}}' ></input>
+    <button class='tj_btn' formType="submit">提交审核</button>
+  </form>
+</view>

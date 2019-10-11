@@ -1,4 +1,5 @@
 // pages/index/index.js
+const app=getApp()
 Page({
 
   /**
@@ -10,6 +11,14 @@ Page({
 		array1:[1,1,1,],
 		array2:[1,1,1,],
 		array3:[1,1,1,],
+    aaa: [
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+      '../../static/images/img1.png',
+    ],
 		index1:'',
 		index2:'',
 		index3:'',
@@ -71,6 +80,13 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  index_tab_fuc(e){
+    console.log(e.currentTarget.dataset.idx)
+    var that =this
+    that.setData({
+      cur: e.currentTarget.dataset.idx
+    })
   },
 	bindPickerChange: function(e) {
 		console.log(e.currentTarget.dataset.idx)

@@ -1,0 +1,22 @@
+<!--pages/my_fs/my_fs.wxml-->
+<view class='container'>
+  <view class='my_box1' wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx">
+    <image wx:if="{{!userInfo.nickName}}"
+      class="user_tx" src="/static/images/tx.jpg" 
+      data-url="/pages/login/login" bindtap='jump'></image>
+    <image wx:if="{{userInfo.nickName}}" class="user_tx" src='{{userInfo.avatarUrl}}'></image>
+    <view class='my_user_msg' wx:if="{{userInfo.nickName}}">
+      <view class='mum1'>{{'小仙女'}} <image class="rz_type" src='../../static/images/rz0.png'></image></view>
+      <!-- <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}"> -->
+        <view class='mum2'>{{'北京东城区'}} 
+          <!-- <text class='my_add_qh'>切换城市</text> -->
+        </view>
+      <!-- </picker> -->
+    </view>
+    <view class="li_guanzhu {{idx==2||idx==3?'ygz':''}}">{{idx==3?'互相关注':idx==2?'已关注':'+关注'}}</view>
+    
+  </view>
+</view>

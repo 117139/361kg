@@ -8,6 +8,7 @@ Page({
   data: {
     userInfo:'',
     'member': wx.getStorageSync('member'),
+    region: '',
   },
 
   /**
@@ -119,6 +120,12 @@ Page({
   onShareAppMessage: function () {
 
   },
+  bindRegionChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      region: e.detail.value
+    })
+  },
 	jump(e){
     if (!wx.getStorageSync('userInfo')) {
       wx.navigateTo({
@@ -127,7 +134,10 @@ Page({
     } else {
       app.jump(e)
     }
-	},
+  },
+  jump1(e) {
+    app.jump(e)
+  },
   call(e){
     app.call(e)
   }

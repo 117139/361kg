@@ -1,0 +1,58 @@
+/* pages/my_tel/my_tel.wxss */
+page,.container{
+  background: #fff;
+}
+.tel_bd{
+  width: 100%;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+}
+.mt25{
+  margin-top: 25rpx;
+}
+.iht{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid #eee;
+  font-size: 30rpx;
+}
+.code_box{
+  width: 100%;
+  display: flex;
+}
+.code_int{
+  flex: 1;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+}
+.fscode{
+  width: 258rpx;
+	height: 78rpx;
+	background-color: #f4b200;
+	border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  color: #fff;
+}
+.tj_btn{
+  margin-top: 180rpx;
+  width: 100%;
+	height: 80rpx;
+	background-color: #f1f1f3;
+	border-radius: 10rpx;
+  border:0 #f1f1f3 solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  color: #bbb;
+}
+.ok{
+  background-color: #f4b200;
+  color: #fff;
+}
