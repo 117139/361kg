@@ -1,15 +1,13 @@
 // pages/fabu/fabu.js
 const app = getApp()
+var htmlStatus = require('../../utils/htmlStatus/index.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    index_tab: [
-      '推荐', '推荐', '推荐', '推荐', '推荐',
-      '推荐', '推荐', '推荐', '推荐', '推荐',
-    ],
+    index_tab: [],
     cur: 0,
     array1: [1, 1, 1,],
     array2: [1, 1, 1,],
@@ -23,7 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getIndextype()
   },
 
   /**
@@ -59,8 +57,7 @@ Page({
    */
   onPullDownRefresh: function () {
 
-    // 停止下拉动作
-    wx.stopPullDownRefresh();
+    this.getIndextype()
   },
 
   /**
@@ -76,38 +73,62 @@ Page({
   onShareAppMessage: function () {
 
   },
-  index_tab_fuc(e) {
-    console.log(e.currentTarget.dataset.idx)
+  getIndextype() {
+    ///api/category / category_column
     var that = this
-    that.setData({
-      cur: e.currentTarget.dataset.idx
+    const htmlStatus1 = htmlStatus.default(that)
+    wx.request({
+      url: app.IPurl + '/api/category/category_index',
+      data: {
+
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        htmlStatus1.finish()
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+
+          that.setData({
+            index_tab: res.data.data,
+          })
+        } else {
+          htmlStatus1.error()
+          wx.showToast({
+            icon: 'none',
+            title: '加载失败'
+          })
+
+        }
+      },
+      fail() {
+        htmlStatus1.error()
+        wx.showToast({
+          icon: 'none',
+          title: '加载失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
     })
   },
-  bindPickerChange: function (e) {
-    console.log(e.currentTarget.dataset.idx)
-    var type = e.currentTarget.dataset.idx
-    if (type == 1) {
-      this.setData({
-        index1: e.detail.value
-      })
-    } else if (type == 2) {
-      this.setData({
-        index2: e.detail.value
-      })
-    } else {
-      this.setData({
-        index3: e.detail.value
-      })
-    }
-    // console.log('picker发送选择改变，携带值为', e.detail.value)
-    // this.setData({
-    //   index: e.detail.value
-    // })
-  },
+ 
   jump(e) {
     var that = this
-    clearInterval(that.data.intervalfuc)
-    app.jump(e)
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    } else {
+      app.jump(e)
+    }
+    
   },
   pveimg(e) {
     var curr = e.currentTarget.dataset.src

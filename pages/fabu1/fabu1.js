@@ -1,34 +1,33 @@
 // pages/fabu1/fabu1.js
 const app = getApp()
+var htmlStatus = require('../../utils/htmlStatus/index.js')
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    idx:'',
+    id:'',
     idlg:0,
+    fbtext:'',
     imgb: [],
     qx: [
-      '企业认证',
-      '个人认证',
       '全部',
+      '个人认证',
+      '企业认证',
     ],
     qx1: [
-      '企业认证1',
-      '个人认证2',
-      '全部3',
+      '7',
+      '30'
     ],
-    index_tab: [
-      '推荐', '推荐', '推荐', '推荐', '推荐',
-      '推荐', '推荐', '推荐', '推荐', '推荐',
-    ],
+    index_tab: [],
     id_arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     cur: 0,
-    index1: '',
-    index2: '',
+    index1: -1,
+    index2: 0,
     index3: '',
-    region:'',
+    region:[],
   },
 
   /**
@@ -36,18 +35,25 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    if (options.idx) {
+    if (options.id) {
       that.setData({
-        idx: options.idx
+        id: options.id
       })
     }
+    that.data.region[0] = wx.getStorageSync('province')
+    that.data.region[1] = wx.getStorageSync('city')
+    that.data.region[2] = wx.getStorageSync('district')
+    that.setData({
+      region: that.data.region
+    })
+    that.getfbmsg()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
@@ -75,9 +81,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
-    // 停止下拉动作
-    wx.stopPullDownRefresh();
+    var that =this
+    that.getfbmsg()
   },
 
   /**
@@ -93,8 +98,179 @@ Page({
   onShareAppMessage: function () {
 
   },
-  getidx(idx){
-    return true
+  getfbmsg() {
+    ///api/category / category_column
+    var that = this
+    const htmlStatus1 = htmlStatus.default(that)
+    wx.request({
+      url: app.IPurl + '/api/category/cate_index',
+      data: {
+        id:that.data.id
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'GET',
+      success(res) {
+        htmlStatus1.finish()
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+
+          that.setData({
+            index_tab: res.data.data,
+            attr: res.data.data[0].attr
+          })
+          var ids=[]
+          for (var i = 0; i < res.data.data[0].attr.length;i++){
+            ids.push(0)
+          }
+          that.setData({
+            id_arr: ids,
+            idlg:0
+          })
+        } else {
+          htmlStatus1.error()
+          wx.showToast({
+            icon: 'none',
+            title: '加载失败'
+          })
+
+        }
+      },
+      fail() {
+        htmlStatus1.error()
+        wx.showToast({
+          icon: 'none',
+          title: '加载失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
+  },
+  fabusub() {
+    var that = this
+    if (!that.data.id) {
+      wx.showToast({
+        icon: "none",
+        title: "请选择分类"
+      })
+      return
+    }
+    if (that.data.idlg == 0) {
+      wx.showToast({
+        icon: "none",
+        title: "请至少选择1个标签"
+      })
+      return
+    }
+    if (that.data.fbtext == "") {
+      wx.showToast({
+        icon: "none",
+        title: "请输入您要发布内容"
+      })
+      return
+    }
+    if (that.data.region[0] == "") {
+      wx.showToast({
+        icon: "none",
+        title: "请选择地址"
+      })
+      return
+    }
+    wx.showModal({
+      title: '提示',
+      content: '是否发布该内容',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.showLoading({
+            title: '请稍后。。'
+          })
+
+          var imbox = that.data.imgb
+          imbox = imbox.join(',')
+          var ids = []
+          var id_arr = that.data.id_arr
+          for (var i = 0; i < id_arr.length;i++){
+            if (id_arr[i]==1){
+              ids.push(that.data.attr[i].id)
+            }
+          }
+          ids = ids.join(',')
+          wx.request({
+            url: app.IPurl + '/api/issue/save',
+            data: {
+              token: wx.getStorageSync('token'),
+              attr_id: ids,
+              content: that.data.fbtext,
+              province: that.data.region[0],
+              city: that.data.region[1],
+              district: that.data.region[2],
+              pic: imbox,
+              permission: that.data.index1,
+              valid_time: that.data.qx1[that.data.index2],
+            },
+            header: {
+            	'content-type': 'application/x-www-form-urlencoded'
+            },
+            dataType: 'json',
+            method: 'POST',
+            success(res) {
+              wx.hideLoading()
+              console.log(res.data)
+
+
+              if (res.data.code == 1) {
+
+                wx.showToast({
+                  icon: 'none',
+                  title: '提交成功',
+                  duration: 2000
+                })
+                setTimeout(function () {
+                  // wx.switchTab({
+                  //   url: "/pages/shequ/shequ"
+                  // })
+                  wx.switchTab({
+                    url: '/pages/index/index',
+                  })
+                }, 1000)
+
+              } else {
+                if (res.data.msg) {
+                  wx.showToast({
+                    icon: 'none',
+                    title: res.data.msg
+                  })
+                } else {
+                  wx.showToast({
+                    icon: 'none',
+                    title: '操作失败'
+                  })
+                }
+              }
+
+
+            },
+            fail() {
+              wx.hideLoading()
+              wx.showToast({
+                icon: 'none',
+                title: '操作失败'
+              })
+            }
+          })
+
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
   getbq(e){
     console.log(e.currentTarget.dataset.idx)
@@ -125,11 +301,28 @@ Page({
     }
     
   },
+
+  bint(e) {
+    console.log(e.detail.value)
+    this.setData({
+      fbtext: e.detail.value
+    })
+
+  },
   index_tab_fuc(e) {
     console.log(e.currentTarget.dataset.idx)
     var that = this
     that.setData({
-      cur: e.currentTarget.dataset.idx
+      cur: e.currentTarget.dataset.idx,
+      attr: that.data.index_tab[e.currentTarget.dataset.idx].attr
+    })
+    var ids = []
+    for (var i = 0; i < that.data.index_tab[e.currentTarget.dataset.idx].attr.length; i++) {
+      ids.push(0)
+    }
+    that.setData({
+      id_arr: ids,
+      idlg:0
     })
   },
   bindPickerChange: function (e) {
@@ -158,6 +351,18 @@ Page({
     this.setData({
       region: e.detail.value
     })
+  },
+  switch1Change:function(e){
+    console.log(e.detail)
+    if (e.detail.value){
+      this.setData({
+        index1:0
+      })
+    }else{
+      this.setData({
+        index1: -1
+      })
+    }
   },
   jump(e) {
     var that = this

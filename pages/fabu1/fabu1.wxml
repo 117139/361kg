@@ -1,7 +1,8 @@
 <!--pages/fabu1/fabu1.wxml-->
 <wxs src="../../utils/filter.wxs" module="filter" />
+<import src="/utils/htmlStatus/index.wxml" />
 <view class='container'>
-  <view class='fabu1_box1'>
+  <view wx:if="{{index_tab.length>0}}" class='fabu1_box1'>
     <scroll-view scroll-x="true" class="index_scroll">
       <view wx:if="{{idx<2}}"	wx:for="{{index_tab}}" 
         wx:for-index="idx" 
@@ -9,24 +10,24 @@
         wx:key="idx"
         data-idx='{{idx}}'
         catchtap='index_tab_fuc'
-        class="index_tab {{idx==cur?'icur':''}}">{{item}}</view>
+        class="index_tab {{idx==cur?'icur':''}}">{{item.title}}</view>
     </scroll-view>
-    <view class='fabu1_bq_box'>
+    <view wx:if="{{attr.length>0}}" class='fabu1_bq_box'>
       <view class="fabu_bq_one {{id_arr[idx]==1?'cur':''}}"
-      	wx:for="{{index_tab}}" 
+      	wx:for="{{attr}}" 
         wx:for-index="idx" 
         wx:for-item="item" 
         wx:key="idx"
         data-idx="{{idx}}"
         data-type="{{idx}}"
-        catchtap='getbq'>{{'标签'}}</view>
+        catchtap='getbq'>{{item.name}}</view>
     </view>
-    <view class='xzbq_tip'>发布最多选3个标签</view>
+    <view wx:if="{{attr.length>0}}" class='xzbq_tip'>发布最多选3个标签</view>
   </view>
   <view class='fabu1_box2'>
     <view class='fabu1_box2-tit'>填写详细信息</view>
     <view class='fabu1_box2_sr'>
-      <textarea class='fbb2_sr_sr' placeholder='请输入您要发布的信息' maxlength='-1'></textarea>
+      <textarea class='fbb2_sr_sr'  bindinput="bint" placeholder='请输入您要发布的信息' maxlength='-1'></textarea>
 
     </view>
     <view class="imgbox">
@@ -58,9 +59,9 @@
   </view>
   <view class='th_kg mt20'>
     <text>允许与您电话沟通</text>
-    <switch checked="{{moren==1}}" class="mrdz" bindchange="switch1Change" color="#ef3e00"/>
+    <switch checked="{{index1!=-1}}" class="mrdz" bindchange="switch1Change" color="#ef3e00"/>
   </view>
-  <picker class='w100' bindchange="bindPickerChange" value="{{index1}}" range="{{qx}}" data-idx="1">
+  <picker wx:if="{{index1!=-1}}" class='w100' bindchange="bindPickerChange" value="{{index1}}" range="{{qx}}" data-idx="1">
     <view class='th_kg'>
       <text>联系权限</text>
       <view>
@@ -71,12 +72,12 @@
   </picker>
   <picker class='w100' bindchange="bindPickerChange" value="{{index2}}" range="{{qx1}}" data-idx="2">
     <view class='th_kg'>
-      <text>联系权限</text>
+      <text>有效时间</text>
       <view>
-        <text class='cef3e00'>{{qx1[index2]}}</text>
+        <text class='cef3e00'>{{qx1[index2]==7?'默认时间（'+qx1[index2]+'天）':qx1[index2]+'天'}}</text>
         <text class='iconfont iconnext'></text>
       </view>
     </view> 
   </picker>
-  <view class='fb1_btn'>确定发布</view>
+  <view class='fb1_btn' catchtap='fabusub'>确定发布</view>
 </view>

@@ -71,7 +71,7 @@
         绑定手机号
       </view>
       <view class='fz26 c9 dis_flex aic'>
-        未绑定<text class="iconfont iconnext"></text>
+        {{phone?phone:'未绑定'}}<text class="iconfont iconnext"></text>
       </view>
       
     </view>

@@ -426,6 +426,8 @@ color:#999;
 	color:rgba(51,51,51,1);
 	line-height:40rpx;
   margin-bottom: 30rpx;
+  word-wrap:break-word;
+word-break:break-all;
 }
 .li_imgBox {
   width:100%;
@@ -465,4 +467,17 @@ display: block;
 
 .cF4B200{
   color: #F4B200;
+}
+
+
+
+
+.hidden{
+	display: none;
+}
+.zanwu{
+	line-height: 140rpx;
+	text-align: center;
+	font-size: 28rpx;
+	color: #999;
 }

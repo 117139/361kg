@@ -1,5 +1,6 @@
 <!--pages/index/index.wxml-->
 <wxs src="../../utils/filter.wxs" module="filter" />
+<import src="/utils/htmlStatus/index.wxml" />
 <view class="container">
   <view class='sousuo_box1'>
     

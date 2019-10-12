@@ -1,5 +1,8 @@
 {
   "pages": [
+    "pages/index/index",
+    "pages/fabu/fabu",
+    "pages/fabu1/fabu1",
     "pages/my/my",
     "pages/my_fs/my_fs",
     "pages/my_index/index",
@@ -13,9 +16,6 @@
     "pages/my_yjfk/yjfk",
     "pages/lxwm/lxwm",
     "pages/xiaoxi/xiaoxi",
-    "pages/fabu1/fabu1",
-    "pages/fabu/fabu",
-    "pages/index/index",
     "pages/login/login",
     "pages/logs/logs",
     "pages/my_sc/my_sc",
@@ -67,7 +67,7 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的"
+      "desc": "你的位置信息将用于小程序的城市定位"
     }
   },
   "sitemapLocation": "sitemap.json"

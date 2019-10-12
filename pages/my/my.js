@@ -7,7 +7,7 @@ Page({
    */
   data: {
     userInfo:'',
-    'member': wx.getStorageSync('member'),
+    'phone': wx.getStorageSync('phone'),
     region: '',
   },
 

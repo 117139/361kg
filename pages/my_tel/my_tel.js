@@ -7,6 +7,11 @@ Page({
    */
   data: {
     tel: '',
+    btnkg:0,
+    time:0,
+    setstate: 0,
+    code_key: '',
+    yzm: ''
   },
 
   /**
@@ -91,24 +96,22 @@ Page({
     }
     //'apipage': 'sendcode', "op": "reg", 'tel': vm.usertel
     wx.request({
-      url: app.IPurl,
+      url: app.IPurl +'/api/my/binding_phone',
       data: {
-        'apipage': 'sendcode',
-        // "op": "reg", 
-        'tel': that.data.tel,
-        "tokenstr": wx.getStorageSync('tokenstr').tokenstr
+        token: wx.getStorageSync('token'),
+        'phone': that.data.tel,
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       dataType: 'json',
-      method: 'get',
+      method: 'post',
       success(res) {
         wx.hideLoading()
         console.log(res.data)
 
 
-        if (res.data.error == 0) {
+        if (res.data.code == 1) {
 
           wx.showToast({
             icon: 'none',
@@ -116,18 +119,22 @@ Page({
             duration: 1000
           })
           that.setData({
-            yzm: res.data.code.substr(0, 4)
+            code_key: res.data.data.key,
+            yzm: res.data.data.code
           })
           console.log(res.data.code)
-          that.codetime()
+          that.codetime(60)
         } else {
+          if (that.data.time == 0 && res.data.data){
+            that.codetime(res.data.data)
+          }
           that.setData({
             btnkg: 0
           })
-          if (res.data.returnstr) {
+          if (res.data.msg) {
             wx.showToast({
               icon: 'none',
-              title: res.data.returnstr
+              title: res.data.msg
             })
           } else {
             wx.showToast({
@@ -153,9 +160,12 @@ Page({
 
 
   },
-  codetime() {
+  codetime(time) {
     let that = this
-    let time = 60
+    
+    if(!time){
+      let time = 60
+    }
     let st = setInterval(function () {
       if (time == 0) {
         that.setData({
@@ -174,12 +184,20 @@ Page({
     }, 1000);
   },
   formSubmit: function (e) {
+    var that =this
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var f_data = e.detail.value
     if (f_data.tel == "") {
       wx.showToast({
         icon: "none",
         title: "请输入输入手机号"
+      })
+      return
+    }
+    if (!(/^1\d{10}$/.test(f_data.tel))) {
+      wx.showToast({
+        icon: 'none',
+        title: '手机号有误'
       })
       return
     }
@@ -190,29 +208,41 @@ Page({
       })
       return
     }
+    if (f_data.code != that.data.yzm) {
+      wx.showToast({
+        icon: "none",
+        title: "验证码错误"
+      })
+      return
+    }
     wx.showModal({
       title: '提示',
       content: '是否提交信息',
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
-          wx.showLoading({
-            title: '请稍后。。'
-          })
+          // wx.showLoading({
+          //   title: '请稍后。。'
+          // })
 
           // var imbox = that.data.imgb
           // imbox = imbox.join(',')
 
           wx.request({
-            url: app.IPurl + '/api/community/save',
-            data: f_data,
-            // header: {
-            // 	'content-type': 'application/x-www-form-urlencoded'
-            // },
+            url: app.IPurl + '/api/my/binding_phone',
+            data: {
+              token: wx.getStorageSync('token'),
+              phone: f_data.tel,
+              verification_key: that.data.code_key,
+              verification_code: f_data.code
+            },
+            header: {
+            	'content-type': 'application/x-www-form-urlencoded'
+            },
             dataType: 'json',
             method: 'POST',
             success(res) {
-              wx.hideLoading()
+              // wx.hideLoading()
               console.log(res.data)
 
 
@@ -223,6 +253,7 @@ Page({
                   title: '提交成功',
                   duration: 2000
                 })
+                app.dologin()
                 setTimeout(function () {
                   // wx.switchTab({
                   //   url: "/pages/shequ/shequ"
@@ -247,7 +278,7 @@ Page({
 
             },
             fail() {
-              wx.hideLoading()
+              // wx.hideLoading()
               wx.showToast({
                 icon: 'none',
                 title: '操作失败'

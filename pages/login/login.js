@@ -21,7 +21,7 @@ Page({
       console.log(e.detail.userInfo)
       app.globalData.userInfo = e.detail.userInfo
       wx.setStorageSync('userInfo', e.detail.userInfo)
-      // app.dologin('shouquan')
+      app.dologin('shouquan')
       
     } else {
       //用户按了拒绝按钮

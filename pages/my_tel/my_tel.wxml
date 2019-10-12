@@ -6,7 +6,8 @@
       <view class='code_int'>
         <input class='iht' placeholder='输入验证码' name='code'></input>
       </view>
-      <view class='fscode' catchtap='getcode'>发送验证码</view>
+      <view wx:if="{{setstate==0}}" class='fscode' catchtap='getcode'>发送验证码</view>
+      <view wx:if="{{setstate==1}}"  class='fscode'>{{time}}s</view>
     </view>
     <button class="tj_btn {{tel.length>0?'ok':''}}" formType="submit">提交审核</button>
   </form>
