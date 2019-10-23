@@ -2,22 +2,35 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
 <import src="/utils/htmlStatus/index.wxml" />
 <view class="container">
-	<view class="index_box">
+	<view wx:if="{{index_tab.length>0}}" class="index_box">
 		<scroll-view scroll-x="true" class="index_scroll">
-			<view	wx:for="{{index_tab}}" 
+      <form class="index_tab pore oform {{idx==cur?'icur':''}}"
+        wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx"
+         data-idx='{{idx}}'
+        bindsubmit="formSubmit_o" report-submit="{{true}}">
+        <button formType="submit"  class='btn'>
+        {{item.title}}
+        </button>
+      </form>
+			<!-- <view	wx:for="{{index_tab}}" 
 				wx:for-index="idx" 
 				wx:for-item="item" 
 				wx:key="idx"
         data-idx='{{idx}}'
-        catchtap='index_tab_fuc'
-				class="index_tab {{idx==cur?'icur':''}}">{{item.title}}</view>
+        bindtap='index_tab_fuc'
+				class="index_tab pore {{idx==cur?'icur':''}}">{{item.title}}
+         
+        </view> -->
 		</scroll-view>
 		<view class="ib_1">
-			<picker bindchange="bindPickerChange" data-idx='1' value="{{index1}}" range-key='title' range="{{array1}}">
+			<picker wx:if="{{cur>2}}" bindchange="bindPickerChange" data-idx='1' value="{{index1}}" range-key='title' range="{{array1}}">
 				<view class="ib_1_type">分类</view>
 			</picker>
 			
-			<picker bindchange="bindPickerChange" data-idx='2' value="{{index2}}" range-key='name' range="{{array2}}">
+			<picker wx:if="{{cur>2}}" bindchange="bindPickerChange" data-idx='2' value="{{index2}}" range-key='name' range="{{array2}}">
 				<view class="ib_1_type">标签</view>
 			</picker>
 			<picker mode="region" bindchange="bindPickerChange" data-idx='3' value="{{region}}" custom-item="{{customItem}}">
@@ -31,53 +44,81 @@
 				wx:for-index="idx" 
 				wx:for-item="item" 
 				wx:key="idx">
-			<view class="index_list" data-url="/pages/details/details?id={{item.id}}" catchtap='jump'>
-				<view class="li_box1">
-					<view class="li_tx_box">
-						<view class="li_tx_img">
-							<image src="{{item.avatar}}"></image>
-						</view>
-						<image wx:if="{{item.company_status==1}}" class="li_user_rz" src="../../static/images/rz.png"></image>
-						<image wx:elif="{{item.person_status==1}}" class="li_user_rz" src="../../static/images/rz1.png"></image>
-						<image wx:else class="li_user_rz" src="../../static/images/rz0.png"></image>
-					</view>
-					<view class="li_user_msg">
-						<view class="lum1">{{item.nickname}}</view>
-						<view class="lum2">{{item.city}}</view>
-					</view>
-					<view class="li_guanzhu {{item.attention!=0?'ygz':''}}">{{item.attention!=0?'已关注':'+关注'}}</view>
-				</view>
-				<view class="li_box2 oh2">{{item.content}}</view>
-				<scroll-view wx:if="{{item.pic}}" class='li_imgBox' scroll-x>
-					<image class='li_imgone'
-						wx:for="{{filter.getgimgarr(item.pic)}}" 
-						wx:for-index="idx" 
-						wx:for-item="item1" 
-						wx:key="idx" 
-            lazy-load='true'
-						src='{{filter.imgIP(item1)}}' 
-						data-src="{{filter.imgIP(item1)}}"
-						data-array="{{filter.getgimgarrIP(item.pic)}}"
-						mode="aspectFill" catchtap='pveimg' ></image>
-				</scroll-view>
-				<view class="li_box4">
-					<view class="li_box4_one">
-						<image src="../../static/images/dz.png" style="width: 28rpx;height: 28rpx;"></image>
-						<text>{{item.praise_num}}</text>
-					</view>
-					<view class="li_box4_one">
-						<image src="../../static/images/pl.png" style="width: 32rpx;height: 28rpx;"></image>
-						<text>{{item.review_num}}</text>
-					</view>
-					<view wx:if="{{item.phone !=''}}" class="li_box4_one" data-tel="{{item.phone}}" catchtap='call'>
-						<image src="../../static/images/lx.png" style="width: 28rpx;height: 28rpx;"></image>
-						<text>联系TA</text>
-					</view>
-				</view>
-			</view>
-			
+<!-- <form bindsubmit="formSubmit_oo" report-submit="{{true}}">
+  
+  <button formType="submit" class='btn'>
+    <form bindsubmit="formSubmit_oo" report-submit="{{true}}">
+      <button formType="submit" class='btn'>
+        
+        <form bindsubmit="formSubmit_oo" report-submit="{{true}}">
+          <button formType="submit" class='btn'> -->
+            
+            <form bindsubmit="formSubmit_oo" report-submit="{{true}}">
+              <button formType="submit" class='btn'>
+                <view class="index_list" data-url="/pages/details/details?id={{item.id}}" bindtap='jump'>
+                  <view class="li_box1">
+                    <view class="li_tx_box">
+                      <view class="li_tx_img" data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
+                        <image src="{{item.avatar}}"></image>
+                      </view>
+                      <image wx:if="{{item.company_status==1}}" class="li_user_rz" src="../../static/images/rz.png"></image>
+                      <image wx:elif="{{item.person_status==1}}" class="li_user_rz" src="../../static/images/rz1.png"></image>
+                      <image wx:else class="li_user_rz" src="../../static/images/rz0.png"></image>
+                    </view>
+                    <view class="li_user_msg" data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
+                      <view class="lum1">{{item.nickname}}</view>
+                      <view class="lum2">{{item.city}}</view>
+                    </view>
+                    <!-- <view wx:if="{{item.user_attention==0}}" class="li_guanzhu {{item.attention!=0?'ygz':''}}" 
+                    data-id="{{item.user_id}}" catchtap="guanzhu">{{item.attention!=0?'已关注':'+关注'}}</view> -->
+                    <view wx:if="{{item.user_attention==0}}" 
+                      class="li_guanzhu {{item.attention==1||item.attention==2?'ygz':''}}" 
+                      data-id="{{item.user_id}}" catchtap="guanzhu"
+                      >{{item.attention==2?'互相关注':item.attention==1?'已关注':'+关注'}}</view>
+                  </view>
+                  <view class="li_box2 oh2">{{item.content}}</view>
+                  <scroll-view wx:if="{{item.pic}}" class='li_imgBox' scroll-x>
+                    <image class='li_imgone'
+                      wx:for="{{filter.getgimgarr(item.pic)}}" 
+                      wx:for-index="idx" 
+                      wx:for-item="item1" 
+                      wx:key="idx" 
+                      lazy-load='true'
+                      src='{{filter.imgIP(item1)}}' 
+                      data-src="{{filter.imgIP(item1)}}"
+                      data-array="{{filter.getgimgarrIP(item.pic)}}"
+                      mode="aspectFill" catchtap='pveimg' ></image>
+                  </scroll-view>
+                  <view class="li_box4">
+                    <view class="li_box4_one">
+                      <image src="../../static/images/dz.png" style="width: 28rpx;height: 28rpx;"></image>
+                      <text>{{item.praise_num}}</text>
+                    </view>
+                    <view class="li_box4_one">
+                      <image src="../../static/images/pl.png" style="width: 32rpx;height: 28rpx;"></image>
+                      <text>{{item.review_num}}</text>
+                    </view>
+                    <view wx:if="{{item.phone !=''&&item.phone !=null&&item.user_attention==0}}" class="li_box4_one" data-tel="{{item.phone}}" catchtap='call'>
+                      <image src="../../static/images/lx.png" style="width: 28rpx;height: 28rpx;"></image>
+                      <text>联系TA</text>
+                    </view>
+                    <view wx:else class="li_box4_one" style="opacity: 0;">
+                      <image src="../../static/images/lx.png" style="width: 28rpx;height: 28rpx;"></image>
+                      <text>联系TA</text>
+                    </view>
+                  </view>
+                </view>
+              </button>
+			      </form>
+          <!-- </button>
+        </form>
+      </button>
+    </form>
+  </button>
+</form> -->
 			<image class="igg_img" wx:if="{{item.ad}}" src="{{filter.imgIP(item.ad.pic)}}"></image>
 			<view wx:else class="hengxian"></view>
 		</block>
 	</view>
 </view>
+<template is="htmlStatus" data="{{...htmlStatus}}" />

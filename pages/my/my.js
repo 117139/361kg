@@ -7,7 +7,7 @@ Page({
    */
   data: {
     userInfo:'',
-    'phone': wx.getStorageSync('phone'),
+    'retdata': '',
     region: '',
   },
 
@@ -17,49 +17,10 @@ Page({
   onLoad: function (options) {
 		// var usermsg=wx.getStorageSync('userInfo')
     this.setData({
+      retdata: wx.getStorageSync('retdata'),
       userInfo: wx.getStorageSync('userInfo')
     })
-		// if(!usermsg){
-		// 	// 获取用户信息
-		// 	wx.getSetting({
-		// 	  success: res => {
-		// 	    console.log('16app'+JSON.stringify(res))
-		// 	    if (res.authSetting['scope.userInfo']==true) {
-		// 	      // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-		// 				wx.getUserInfo({
-		// 					success(res) {
-		// 						app.globalData.userInfo = res.userInfo
-		// 						console.log(app.globalData.userInfo)
-		// 						wx.setStorageSync('userInfo', res.userInfo)
-		// 						if(!app.globalData.userInfo){
-		// 							wx.reLaunch({
-		// 							  url: '/pages/login/login',
-		// 							  fail: (err) => {
-		// 							    console.log("失败: " + JSON.stringify(err));
-		// 							  }
-		// 							})
-		// 						}else{
-		// 							app.dologin()
-		// 						}
-		// 					}
-		// 				})
-						
-		// 	    }else{
-		// 	      wx.reLaunch({
-		// 	        url: '/pages/login/login',
-		// 	        fail: (err) => {
-		// 	          console.log("失败: " + JSON.stringify(err));
-		// 	        }
-		// 				})
-		// 	    }
-		// 	  }
-		// 	})
-			
-		// }else{
-		// 	this.setData({
-		// 		userInfo:usermsg
-		// 	})
-		// }
+		
   },
 
   /**
@@ -73,15 +34,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      'member': wx.getStorageSync('member'),
+    var that =this
+    that.setData({
       userInfo: wx.getStorageSync('userInfo')
     })
     if (wx.getStorageSync('userInfo').nickName !== undefined) {
-      app.dologin()
+      app.dologin1('', '', '')
     }
+    setTimeout(function(){
+      console.log(11111)
+      that.data.retdata = wx.getStorageSync('retdata')
+      that.setData({
+        retdata: that.data.retdata
+      })
+    },500)
+    
   },
-
+  retry(){
+    var that=this
+    app.dologin1('','','')
+    setTimeout(function () {
+      that.data.retdata=wx.getStorageSync('retdata')
+      that.setData({
+        retdata: that.data.retdata
+      })
+    }, 500)
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -101,7 +79,7 @@ Page({
    */
   onPullDownRefresh: function () {
     if (wx.getStorageSync('userInfo').nickName !== undefined) {
-      app.dologin()
+      app.dologin1('', '', '')
     }
     // 停止下拉动作
     wx.stopPullDownRefresh();
@@ -121,10 +99,62 @@ Page({
 
   },
   bindRegionChange: function (e) {
+    var that=this
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
-      region: e.detail.value
+    wx.request({
+      url: app.IPurl + '/api/my/update_city',
+      data: {
+        token: wx.getStorageSync('token'),
+        province: e.detail.value[0],
+        city: e.detail.value[1],
+        district: e.detail.value[2],
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+          app.dologin1('', '', '')
+          wx.showToast({
+            title: '操作成功',
+          })
+          that.data.retdata.province = e.detail.value[0]
+          that.data.retdata.city = e.detail.value[1]
+          that.data.retdata.district = e.detail.value[2]
+          console.log(that.data.retdata.province)
+          that.setData({
+            retdata: that.data.retdata
+          })
+          console.log(that.data.retdata.province)
+        } else {
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
+
+        }
+      },
+      fail() {
+        wx.showToast({
+          icon: 'none',
+          title: '操作失败'
+        })
+
+      },
+      complete() {
+      }
     })
+    
   },
 	jump(e){
     if (!wx.getStorageSync('userInfo')) {

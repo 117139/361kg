@@ -1,17 +1,17 @@
 <!--pages/lxwm/lxwm.wxml-->
 <view class='container'>
-  <view class='lxwm_box1'>
+  <view class='lxwm_box1' wx:if="{{about}}">
     <view class='lxwm_b1'>
-      <view class='lxwm_tit'>361KG</view>
-      <view class='lxwm_jj'>广州361KG信息服务平台</view>
-      <view class='lxwm_jj'>主要服务模具加工制造业企业和个体</view>
+      <view class='lxwm_tit'>{{about.title}}</view>
+      <view class='lxwm_jj'>{{about.name}}</view>
+      <view class='lxwm_jj'>{{about.introduce}}</view>
     </view>
-    <view class='lxwm_b2' data-tel="{{'1111111'}}" catchtap='call'>
+    <view class='lxwm_b2' data-tel="{{about.contact_phone}}" catchtap='call'>
       <view class='lx_b2_msg'>
-        <view class='lx_msg1'>联系人  王生 
-          <text class='fz26 c6'>13711574965</text>
+        <view class='lx_msg1'>联系人  {{about.contacts}} 
+          <text class='fz26 c6'>{{about.contact_phone}}</text>
         </view>
-        <view class='lx_msg2'>如有需要业务帮助，可以拨打电话，微信同步</view>
+        <view class='lx_msg2'>{{about.contact_desc}}</view>
       </view>
       <text class='iconfont iconnext' style='color:#DDDDDD'></text>
     </view> 

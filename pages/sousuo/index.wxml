@@ -5,70 +5,74 @@
   <view class='sousuo_box1'>
     
     <view class='ssrr_box'>
-      <input placeholder='请输入您要搜索的信息'></input>
-      <text class='iconfont iconsousuo'></text>
+      <input focus="true" placeholder='请输入您要搜索的信息' bindinput="bint" type="text"
+      confirm-type="search" bindconfirm="getlist"></input>
+      <text class='iconfont iconsousuo' data-type="sousuo" catchtap="getlist"></text>
     </view>
   </view>
 
-	<view class="w100">
-		<block wx:for="{{index_tab}}" 
+	<view wx:if="{{datalist}}" class="w100">
+		<block wx:for="{{datalist}}" 
 				wx:for-index="idx" 
 				wx:for-item="item" 
 				wx:key="idx">
-			<view class="index_list" >
+			<view class="index_list" data-url="/pages/details/details?id={{item.id}}" catchtap='jump'>
 				<view class="li_box1">
 					<view class="li_tx_box">
-						<view class="li_tx_img">
-							<image src="../../static/images/tx.png"></image>
+						<view class="li_tx_img" data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
+							<image src="{{item.avatar}}"></image>
 						</view>
-						<image class="li_user_rz" src="../../static/images/rz.png"></image>
-						<image class="li_user_rz" src="../../static/images/btn2.png"></image>
+						<image wx:if="{{item.company_status==1}}" class="li_user_rz" src="../../static/images/rz.png"></image>
+						<image wx:elif="{{item.person_status==1}}" class="li_user_rz" src="../../static/images/rz1.png"></image>
+						<image wx:else class="li_user_rz" src="../../static/images/rz0.png"></image>
 					</view>
-					<view class="li_user_msg">
-						<view class="lum1">章鱼船长</view>
-						<view class="lum2">北京</view>
+					<view class="li_user_msg" data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
+						<view class="lum1">{{item.nickname}}</view>
+						<view class="lum2">{{item.city}}</view>
 					</view>
-					<view class="li_guanzhu {{idx==2?'ygz':''}}">{{'+关注'}}</view>
+					<!-- <view wx:if="{{item.user_attention==0}}" class="li_guanzhu {{item.attention!=0?'ygz':''}}" 
+          data-id="{{item.user_id}}" catchtap="guanzhu">{{item.attention!=0?'已关注':'+关注'}}</view> -->
+          <view wx:if="{{item.user_attention==0}}" 
+            class="li_guanzhu {{item.attention==1||item.attention==2?'ygz':''}}" 
+            data-id="{{item.user_id}}" catchtap="guanzhu"
+            >{{item.attention==2?'互相关注':item.attention==1?'已关注':'+关注'}}</view>
 				</view>
-				<view class="li_box2">{{'二手N18，N21启动马达，检修好的，已更换损坏零部件，实验正常.直接安装使用，现货供应，批发更优惠！'}}</view>
-				<scroll-view wx:if="{{array3}}" class='li_imgBox' scroll-x>
-					<!-- <image class='li_imgone'
+				<view class="li_box2 oh2">{{item.content}}</view>
+				<scroll-view wx:if="{{item.pic}}" class='li_imgBox' scroll-x>
+					<image class='li_imgone'
 						wx:for="{{filter.getgimgarr(item.pic)}}" 
 						wx:for-index="idx" 
 						wx:for-item="item1" 
 						wx:key="idx" 
+            lazy-load='true'
 						src='{{filter.imgIP(item1)}}' 
 						data-src="{{filter.imgIP(item1)}}"
 						data-array="{{filter.getgimgarrIP(item.pic)}}"
-						mode="aspectFill" catchtap='pveimg' ></image> -->
-          <image class='li_imgone'
-            wx:for="{{aaa}}" 
-            wx:for-index="idx" 
-            wx:for-item="item1" 
-            wx:key="idx" 
-            src='{{item1}}' 
-            data-src="{{item1}}"
-            data-array="{{aaa}}"
-            mode="aspectFill" catchtap='pveimg' ></image>
+						mode="aspectFill" catchtap='pveimg' ></image>
 				</scroll-view>
 				<view class="li_box4">
 					<view class="li_box4_one">
 						<image src="../../static/images/dz.png" style="width: 28rpx;height: 28rpx;"></image>
-						<text>1356</text>
+						<text>{{item.praise_num}}</text>
 					</view>
 					<view class="li_box4_one">
 						<image src="../../static/images/pl.png" style="width: 32rpx;height: 28rpx;"></image>
-						<text>758</text>
+						<text>{{item.review_num}}</text>
 					</view>
-					<view class="li_box4_one">
+					<view wx:if="{{item.phone !=''&&item.phone !=null&&item.user_attention==0}}" class="li_box4_one" data-tel="{{item.phone}}" catchtap='call'>
 						<image src="../../static/images/lx.png" style="width: 28rpx;height: 28rpx;"></image>
 						<text>联系TA</text>
 					</view>
+          <view wx:else class="li_box4_one" style="opacity: 0;">
+            <image src="../../static/images/lx.png" style="width: 28rpx;height: 28rpx;"></image>
+            <text>联系TA</text>
+          </view>
 				</view>
 			</view>
 			
-			<image class="igg_img" wx:if="{{idx%2==0}}" src="../../static/images/banner.png"></image>
+			<image class="igg_img" wx:if="{{item.ad}}" src="{{filter.imgIP(item.ad.pic)}}"></image>
 			<view wx:else class="hengxian"></view>
 		</block>
 	</view>
 </view>
+<template is="htmlStatus" data="{{...htmlStatus}}" />

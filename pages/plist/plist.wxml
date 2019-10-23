@@ -2,44 +2,13 @@
 <wxs src="../../utils/filter.wxs" module="filter" />
 <import src="/utils/htmlStatus/index.wxml" />
 <view class="container">
-	<view class="w100" wx:if="{{xq_data}}">
+	<view class="w100">
 	
-    <view class="index_list" id="xq_index">
-      <view class="li_box1" style='padding:32rpx 0;'>
-        <view class="li_tx_box"  data-url="/pages/my_index/index?id={{xq_data.user_id}}" catchtap='jump'>
-          <view class="li_tx_img">
-            <image src="{{xq_data.avatar}}"></image>
-          </view>
-          <image wx:if="{{xq_data.company_status==1}}" class="li_user_rz" src="../../static/images/rz.png"></image>
-						<image wx:elif="{{xq_data.person_status==1}}" class="li_user_rz" src="../../static/images/rz1.png"></image>
-						<image wx:else class="li_user_rz" src="../../static/images/rz0.png"></image>
-        </view>
-        <view class="li_user_msg"  data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
-          <view class="lum1">{{xq_data.nickname}}</view>
-          <view class="lum2">{{xq_data.city}}</view>
-        </view>
-        <view wx:if="{{xq_data.user_attention==0}}" class="li_guanzhu {{xq_data.attention!=0?'ygz':''}}" 
-          data-id="{{xq_data.user_id}}" catchtap="guanzhu">{{xq_data.attention!=0?'已关注':'+关注'}}</view>
-      </view>
-      <view class="li_box2">{{xq_data.content}}</view>
-      <scroll-view wx:if="{{xq_data.pic}}" class='li_imgBox' scroll-x>
-        <image class='li_imgone'
-          wx:for="{{filter.getgimgarr(xq_data.pic)}}" 
-          wx:for-index="idx" 
-          wx:for-item="item1" 
-          wx:key="idx" 
-          src='{{filter.imgIP(item1)}}' 
-          data-src="{{filter.imgIP(item1)}}"
-          data-array="{{filter.getgimgarrIP(xq_data.pic)}}"
-          mode="aspectFill" catchtap='pveimg' ></image>
-      </scroll-view>
-    </view>
-    <view class="hengxian"></view>
     <view class='pl_box' id="pl_box">
-      <view class='pl_tit'>
+      <!-- <view class='pl_tit'>
         <view class='pl_pl_tit'>评论（{{xq_data.review_num}}）</view>
         <view>点赞（{{xq_data.praise_num}}）</view>
-      </view>
+      </view> -->
       <view class='pl_list'
       	wx:for="{{datalist}}" 
 				wx:for-index="idx" 
@@ -59,7 +28,7 @@
             <view class="lum_inr">{{item.content}}</view>
             <view class="lum_time dis_flex ju_b aic">
               <text>{{item.create_time}}</text>
-              <text class="cF4B200" data-url="/pages/gopl/gopl?id={{xq_data.id}}&pid={{item.id}}" catchtap='jump1'>评论</text>
+              <!-- <text class="cF4B200" data-url="/pages/gopl/gopl?id={{xq_data.id}}&pid={{item.id}}" catchtap='jump1'>评论</text> -->
             </view>
             <view class="pl_hf" wx:if="{{item.child.length>0}}">
               <view class="li_user_msg" wx:for="{{item.child}}" 
@@ -71,8 +40,7 @@
                 <view class="lum_inr" style="margin:5rpx 0;">{{item1.content}}</view>
                 <view class="lum_time">{{item1.create_time}}</view>
               </view>
-              <view class="fz26" style="color: rgba(60,115,190,1);" 
-              data-url="/pages/plist/plist?id={{item.id}}" catchtap='jump'>查看更多>></view>
+              <view class="fz26" style="color: rgba(60,115,190,1);">查看更多>></view>
             </view>
             
           </view>

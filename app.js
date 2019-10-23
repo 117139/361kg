@@ -1,7 +1,7 @@
 //app.js
 var amapFile = require('./libs/amap-wx.js');
 App({
-  IPurl: 'http://361kg.800123456.top',
+  IPurl: 'https://361kg.800123456.top/',
   gd_key: 'e3301fb38266273823ded1b0265f794a',
   onLaunch: function () {
     let that=this
@@ -129,26 +129,34 @@ App({
         console.log(data[0].regeocodeData.addressComponent)
         var address_data = data[0].regeocodeData.addressComponent
         if (address_data.city.length==0){
-          that.globalData.city = address_data.province
+          // that.globalData.city = address_data.province
+          that.dologin1(address_data.province, address_data.province, address_data.district, type) //denglu
         }else{
-          that.globalData.city = address_data.city
+          // that.globalData.city = address_data.city
+          that.dologin1(address_data.province, address_data.city, address_data.district, type) //denglu
         }
-        that.globalData.province = address_data.province
-        that.globalData.district = address_data.district
+        // that.globalData.province = address_data.province
+        // that.globalData.district = address_data.district
 
 
-        that.dologin1(type) //denglu
+        
       },
       fail: function (info) {
         //失败回调
         console.log(info)
-        that.dologin1(type) //denglu
+        that.dologin1('','','',type) //denglu
       }
     })
 		
 	},
-	dologin1(type){
+  dologin1(province, city, district,type){
+    console.log(typeof(province))
     let that = this
+    if (!province || province == 'null' || province == 'undefined'){
+      province = ''
+      city = ''
+      district=''
+    }
     wx.login({
       success: function (res) {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
@@ -158,9 +166,9 @@ App({
           // apipage:'login',
           nickname: uinfo.nickName,
           avatar: uinfo.avatarUrl,
-          province: that.globalData.province,
-          city: that.globalData.city,
-          district: that.globalData.district,
+          province: province,
+          city: city,
+          district: district,
 
           // homeid: 0   //0用户端，1师傅端
         }
@@ -178,12 +186,16 @@ App({
             console.log(res.data)
             if (res.data.code == 1) {
               console.log('登录成功')
+              that.globalData.province == ''
+              that.globalData.city == ''
+              that.globalData.district==''
               // wx.setStorageSync('token', res.data.data)
               wx.setStorageSync('token', res.data.data.token)
               wx.setStorageSync('province', res.data.data.province)
               wx.setStorageSync('city', res.data.data.city)
               wx.setStorageSync('district', res.data.data.district)
               wx.setStorageSync('phone', res.data.data.phone)
+              wx.setStorageSync('retdata', res.data.data)
               if (type == 'shouquan') {
                 // wx.reLaunch({
                 //   url: '/pages/index/index',
@@ -236,6 +248,12 @@ App({
 	  })
 	},
   call(e) {
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+      return
+    }
     wx.makePhoneCall({
       phoneNumber: e.currentTarget.dataset.tel
     })

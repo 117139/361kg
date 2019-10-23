@@ -1,6 +1,9 @@
 /* pages/index/index.wxss */
 .index_box{
+  width: 750rpx;
   background-color: #fff;
+  margin-top: 165rpx;
+  box-sizing: border-box;
 }
 .index_scroll{
 	width: 750rpx;
@@ -11,31 +14,47 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 999;
 }
 .index_tab{
   display: inline-flex;
 	white-space:nowrap;
-	font-size: 30rpx;
+	font-size: 30rpx!important;
 	justify-content: center;
 	padding: 15rpx;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	
+	line-height: 1!important;
 }
-.icur{
-	font-size: 32rpx;
-	color: #F4B200;
+.index_tab .btn{
+  font-size: 30rpx!important;
+  line-height:45rpx!important;
+  padding: 0!important;
+}
+.icur.index_tab .btn{
+	font-size: 32rpx!important;
+	color: #F4B200!important;
+  
 }
 .ib_1{
 	width: 100%;
-	margin-top: 30rpx;
-	margin-bottom: 22rpx;
-	padding: 0 32rpx;
+	/* margin-top: 30rpx;
+	margin-bottom: 22rpx; */
+	padding: 30rpx 32rpx 22rpx;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	text-align: right;
+  position: fixed;
+  top:75rpx;
+  left: 0;
+  z-index: 999;
+  background: #fff;
 }
 .ib_1 picker{
 	display: inline-block;
@@ -104,7 +123,7 @@ font-family:Microsoft YaHei;
 font-weight:400;
 color:#999;
 }
-.li_guanzhu{
+/* .li_guanzhu{
 	width:132rpx;
 	height:48rpx;
 	background:#F4B200;
@@ -121,7 +140,7 @@ color:#999;
 	font-weight:400;
 	color: #999;
 	background:#EEEEEE;
-}
+} */
 .li_box2{
 	margin-top: 28rpx;
 	font-size:30rpx;
@@ -148,20 +167,21 @@ margin-right:12rpx;
 	width:750rpx;
 height:296rpx;
 display: block;
+
 }
-.li_box4{
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-.li_box4_one{
-	display: flex;
-	align-items: center;
-	font-size:24rpx;
-	font-family:Microsoft YaHei;
-	font-weight:400;
-	color:rgba(153,153,153,1);
-}
+
 .li_box4_one image{
 	margin-right: 9rpx;
+}
+
+
+form button{
+  padding: 0;
+  line-height: 1;
+  text-align: left;
+}
+
+form button::after{
+  content: '';
+  display: none;
 }

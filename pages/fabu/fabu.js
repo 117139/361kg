@@ -97,10 +97,18 @@ Page({
           })
         } else {
           htmlStatus1.error()
-          wx.showToast({
-            icon: 'none',
-            title: '加载失败'
-          })
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '加载失败'
+            })
+          }
+         
 
         }
       },
@@ -126,6 +134,23 @@ Page({
         url: '/pages/login/login',
       })
     } else {
+			if (!wx.getStorageSync('retdata').phone) {
+        wx.showModal({
+          title: '提示',
+          content: '发布信息需要先绑定手机号，是否前往设置手机号',
+          success(res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '/pages/my_tel/my_tel',
+              })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+			  
+				return
+			}
       app.jump(e)
     }
     

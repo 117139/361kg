@@ -6,19 +6,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: '',
-    'member': wx.getStorageSync('member'),
-    region: '',
+    about: {},
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var usermsg=wx.getStorageSync('userInfo')
-    this.setData({
-      userInfo: wx.getStorageSync('userInfo')
-    })
+    this.getabout()
     
   },
 
@@ -54,9 +49,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    if (wx.getStorageSync('userInfo').nickName !== undefined) {
-      app.dologin()
-    }
+   
     // 停止下拉动作
     wx.stopPullDownRefresh();
   },
@@ -74,10 +67,51 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindRegionChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
-      region: e.detail.value
+  getabout(){
+    var that =this
+    ///api/my/about
+    wx.request({
+      url: app.IPurl + '/api/my/about',
+      data: {},
+      header: {
+      	'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'POST',
+      success(res) {
+        wx.hideLoading()
+        console.log(res.data)
+
+
+        if (res.data.code == 1) {
+
+          that.setData({
+            about:res.data.data
+          })
+
+        } else {
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '获取失败'
+            })
+          }
+        }
+
+
+      },
+      fail() {
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '获取失败'
+        })
+      }
     })
   },
   jump(e) {

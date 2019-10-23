@@ -454,6 +454,7 @@ display: block;
 	justify-content: space-between;
 }
 .li_box4_one{
+  /* width: 33%; */
 	display: flex;
 	align-items: center;
 	font-size:24rpx;
@@ -468,7 +469,9 @@ display: block;
 .cF4B200{
   color: #F4B200;
 }
-
+.fr{
+  float: right;
+}
 
 
 
@@ -480,4 +483,11 @@ display: block;
 	text-align: center;
 	font-size: 28rpx;
 	color: #999;
+}
+.pore{
+  position: relative;
+}
+.oform button,.oform button:after{
+  background: transparent;
+  border: transparent!important;
 }

@@ -1,17 +1,39 @@
 <!--pages/my_rz/my_rz.wxml-->
 <view class='container'>
-  <view class='my_rz_li' data-url="/pages/my_rz_gr/my_rz_gr" catchtap='jump'>
+
+  <!-- /个人/ -->
+  <view class='my_rz_li' wx:if="{{retdata.person_status==1||retdata.person_status==0}}">
     <view class='my_rz_li1'>
       <view class='my_rz_li1_1'>个人认证</view>
       <view class='my_rz_li1_2'>用户个人真实身份的认证</view>
     </view>
-     <text class='iconfont iconnext' style='color:#DDDDDD'></text>
+     <view style='color:#F4B200'>{{retdata.person_status==1?'已认证':retdata.person_status==2?'认证未通过':retdata.person_status==0?'待审核':'未认证'}}</view>
   </view>
-  <view class='my_rz_li' data-url="/pages/my_rz_qy/my_rz_qy" catchtap='jump'>
+  <view wx:else class='my_rz_li' data-url="/pages/my_rz_gr/my_rz_gr" catchtap='jump'>
+    <view class='my_rz_li1'>
+      <view class='my_rz_li1_1'>个人认证</view>
+      <view class='my_rz_li1_2'>用户个人真实身份的认证</view>
+    </view>
+     <view style='color:#DDDDDD'>{{retdata.person_status==1?'已认证':retdata.person_status==2?'认证未通过':retdata.person_status==0?'待审核':'未认证'}}<text class='iconfont iconnext' ></text></view>
+  </view>
+  <!-- /个人/ -->
+  <!-- /企业认证/ -->
+  <view class='my_rz_li' wx:if="{{retdata.company_status==1||retdata.company_status==0}}">
     <view class='my_rz_li1'>
       <view class='my_rz_li1_1'>企业认证</view>
       <view class='my_rz_li1_2'>为企业构建良好的品牌推广</view>
     </view>
-     <text class='iconfont iconnext' style='color:#DDDDDD'></text>
+    <view style='color:#F4B200'>{{retdata.company_status==1?'已认证':retdata.company_status==2?'认证未通过':retdata.company_status==0?'待审核':'未认证'}}</view>
+     
   </view>
+  <view wx:else class='my_rz_li' data-url="/pages/my_rz_qy/my_rz_qy" catchtap='jump'>
+    <view class='my_rz_li1'>
+      <view class='my_rz_li1_1'>企业认证</view>
+      <view class='my_rz_li1_2'>为企业构建良好的品牌推广</view>
+    </view>
+    <view style='color:#DDDDDD'>{{retdata.company_status==1?'已认证':retdata.company_status==2?'认证未通过':retdata.company_status==0?'待审核':'未认证'}}<text class='iconfont iconnext' style='color:#DDDDDD'></text></view>
+     
+  </view>
+
+  
 </view>

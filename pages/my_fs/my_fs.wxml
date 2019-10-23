@@ -1,22 +1,25 @@
 <!--pages/my_fs/my_fs.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
+<import src="/utils/htmlStatus/index.wxml" />
 <view class='container'>
-  <view class='my_box1' wx:for="{{index_tab}}" 
+  <view class='my_box1' wx:for="{{datalist}}" 
 				wx:for-index="idx" 
 				wx:for-item="item" 
-				wx:key="idx">
-    <image wx:if="{{!userInfo.nickName}}"
-      class="user_tx" src="/static/images/tx.jpg" 
-      data-url="/pages/login/login" bindtap='jump'></image>
-    <image wx:if="{{userInfo.nickName}}" class="user_tx" src='{{userInfo.avatarUrl}}'></image>
-    <view class='my_user_msg' wx:if="{{userInfo.nickName}}">
-      <view class='mum1'>{{'小仙女'}} <image class="rz_type" src='../../static/images/rz0.png'></image></view>
-      <!-- <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}"> -->
-        <view class='mum2'>{{'北京东城区'}} 
-          <!-- <text class='my_add_qh'>切换城市</text> -->
-        </view>
-      <!-- </picker> -->
+				wx:key="idx" data-url="/pages/my_index/index?id={{item.id}}" catchtap='jump'>
+    <image class="user_tx" src='{{item.avatar}}'></image>
+    <view class='my_user_msg'>
+      <view class='mum1'>{{item.nickname}} 
+        <image wx:if="{{item.company_status==1}}" class="rz_type" src="../../static/images/rz.png"></image>
+        <image wx:elif="{{item.person_status==1}}" class="rz_type" src="../../static/images/rz1.png"></image>
+        <image wx:else class="rz_type" src="../../static/images/rz0.png"></image>
+      </view>
+      <view class='mum2'>{{item.city}}</view>
     </view>
-    <view class="li_guanzhu {{idx==2||idx==3?'ygz':''}}">{{idx==3?'互相关注':idx==2?'已关注':'+关注'}}</view>
+    <view data-id="{{item.id}}" 
+    catchtap="guanzhu" 
+    class="li_guanzhu {{item.attention==1||item.attention==2?'ygz':''}}"
+    >{{item.attention==2?'互相关注':item.attention==1?'已关注':'+关注'}}</view>
     
   </view>
 </view>
+<template is="htmlStatus" data="{{...htmlStatus}}" />

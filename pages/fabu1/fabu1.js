@@ -24,10 +24,12 @@ Page({
     index_tab: [],
     id_arr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     cur: 0,
-    index1: -1,
+    index1: 0,
     index2: 0,
     index3: '',
     region:[],
+    retdata: wx.getStorageSync('retdata'),
+    tel: wx.getStorageSync('retdata').phone
   },
 
   /**
@@ -60,7 +62,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      retdata: wx.getStorageSync('retdata')
+    })
   },
 
   /**
@@ -98,6 +102,17 @@ Page({
   onShareAppMessage: function () {
 
   },
+  formSubmit: function (e) {
+    console.log('form发生了submit事件，携带数据为：', e.detail.formId)
+    this.fabusub(e.detail.formId)
+  },
+  bint_tel(e) {
+    console.log(e.detail.value)
+    this.setData({
+      tel: e.detail.value
+    })
+
+  },
   getfbmsg() {
     ///api/category / category_column
     var that = this
@@ -131,11 +146,17 @@ Page({
           })
         } else {
           htmlStatus1.error()
-          wx.showToast({
-            icon: 'none',
-            title: '加载失败'
-          })
-
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '加载失败'
+            })
+          }
         }
       },
       fail() {
@@ -152,7 +173,7 @@ Page({
       }
     })
   },
-  fabusub() {
+  fabusub(fid) {
     var that = this
     if (!that.data.id) {
       wx.showToast({
@@ -181,6 +202,16 @@ Page({
         title: "请选择地址"
       })
       return
+    } 
+    if (that.data.index1!=-1){
+      console.log(that.data.tel)
+      if (that.data.tel == '' || !(/^1\d{10}$/.test(that.data.tel))) {
+        wx.showToast({
+          icon: 'none',
+          title: '手机号有误'
+        })
+        return
+      }
     }
     wx.showModal({
       title: '提示',
@@ -211,9 +242,11 @@ Page({
               province: that.data.region[0],
               city: that.data.region[1],
               district: that.data.region[2],
+              phone: that.data.tel,
               pic: imbox,
               permission: that.data.index1,
               valid_time: that.data.qx1[that.data.index2],
+              formId:fid
             },
             header: {
             	'content-type': 'application/x-www-form-urlencoded'
@@ -400,7 +433,7 @@ Page({
     wx.chooseImage({
       count: 9,
       sizeType: ['original', 'compressed'],
-      sourceType: ['camera'],
+      sourceType: ['album','camera'],
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         console.log(res)

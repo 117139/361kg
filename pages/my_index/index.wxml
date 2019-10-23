@@ -1,78 +1,75 @@
 <!--pages/index/index.wxml-->
 <wxs src="../../utils/filter.wxs" module="filter" />
+<import src="/utils/htmlStatus/index.wxml" />
 <view class="container">
-  <view class='my_box1'>
-    <image wx:if="{{!userInfo.nickName}}"
-      class="user_tx" src="/static/images/tx.jpg" 
-      data-url="/pages/login/login" bindtap='jump'></image>
-    <image wx:if="{{userInfo.nickName}}" class="user_tx" src='{{userInfo.avatarUrl}}'></image>
-    <view class='my_user_msg' wx:if="{{userInfo.nickName}}">
-      <view class='mum1'>{{'小仙女'}} <image class="rz_type" src='../../static/images/rz0.png'></image></view>
+  <view  wx:if="{{xq_data}}" class='my_box1'>
+    <image class="user_tx" src='{{xq_data.avatar}}'></image>
+    <view class='my_user_msg'>
+      <view class='mum1'>{{xq_data.nickname}} 
+      <image wx:if="{{xq_data.company_status==1}}" class="rz_type" src="../../static/images/rz.png"></image>
+			<image wx:elif="{{xq_data.person_status==1}}" class="rz_type" src="../../static/images/rz1.png"></image>
+			<image wx:else class="rz_type" src="../../static/images/rz0.png"></image>
+      </view>
       <!-- <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}"> -->
-        <view class='mum2'>{{'北京东城区'}} 
+        <view class='mum2'>{{xq_data.city}} 
           <!-- <text class='my_add_qh'>切换城市</text> -->
         </view>
       <!-- </picker> -->
     </view>
-    <view class='gozy' wx:if="{{userInfo.nickName}}">
-      
-    </view>
+    <view wx:if="{{id !=myid}}" class="li_guanzhu {{xq_data.attention==1||xq_data.attention==2?'ygz':''}}" 
+          data-id="{{xq_data.user_id}}" catchtap="guanzhu">{{xq_data.attention==2?'互相关注':xq_data.attention==1?'已关注':'+关注'}}</view>
     
   </view>
-	<view class='my_box2'>
+	<view class='my_box2' wx:if="{{xq_data}}">
     <view class='mb2_one'>
-      <view class='mb2_one1'>12</view>
+      <view class='mb2_one1'>{{xq_data.fans_num}}</view>
       <view class='mb2_one2'>粉丝</view>
     </view>
     <view class='mb2_one'>
-      <view class='mb2_one1'>12</view>
+      <view class='mb2_one1'>{{xq_data.attention_num}}</view>
       <view class='mb2_one2'>关注</view>
     </view>
     <view class='mb2_one'>
-      <view class='mb2_one1'>12</view>
+      <view class='mb2_one1'>{{xq_data.praise_num}}</view>
       <view class='mb2_one2'>获赞</view>
     </view>
   </view>
 	<view class="w100">
-		<block wx:for="{{index_tab}}" 
+		<block wx:for="{{datalist}}" 
 				wx:for-index="idx" 
 				wx:for-item="item" 
 				wx:key="idx">
-			<view class="index_list" >
-				<view class='list_time'>09-15  22:16</view>
-				<view class="li_box2">{{'二手N18，N21启动马达，检修好的，已更换损坏零部件，实验正常.直接安装使用，现货供应，批发更优惠！'}}</view>
-				<scroll-view wx:if="{{array3}}" class='li_imgBox' scroll-x>
-					<!-- <image class='li_imgone'
+			<view class="index_list"  data-url="/pages/details/details?id={{item.id}}" catchtap='jump'>
+				<view class='list_time'>
+          <text>{{item.create_time}}</text>
+          <text wx:if="{{id ==myid}}" class="fr cF4B200" data-id="{{item.id}}" catchtap="del">删除</text>
+        </view>
+				<view class="li_box2">{{item.content}}</view>
+				<scroll-view wx:if="{{item.pic}}" class='li_imgBox' scroll-x>
+					<image class='li_imgone'
 						wx:for="{{filter.getgimgarr(item.pic)}}" 
 						wx:for-index="idx" 
 						wx:for-item="item1" 
 						wx:key="idx" 
+            lazy-load="true"
 						src='{{filter.imgIP(item1)}}' 
 						data-src="{{filter.imgIP(item1)}}"
 						data-array="{{filter.getgimgarrIP(item.pic)}}"
-						mode="aspectFill" catchtap='pveimg' ></image> -->
-          <image class='li_imgone'
-            wx:for="{{aaa}}" 
-            wx:for-index="idx" 
-            wx:for-item="item1" 
-            wx:key="idx" 
-            src='{{item1}}' 
-            data-src="{{item1}}"
-            data-array="{{aaa}}"
-            mode="aspectFill" catchtap='pveimg' ></image>
+						mode="aspectFill" catchtap='pveimg' ></image>
+          
 				</scroll-view>
 				<view class="li_box4">
 					<view class="li_box4_one">
 						<image src="../../static/images/dz.png" style="width: 28rpx;height: 28rpx;"></image>
-						<text>1356</text>
+						<text>{{item.praise_num}}</text>
 					</view>
 					<view class="li_box4_one">
 						<image src="../../static/images/sc.png" style="width: 28rpx;height: 28rpx;"></image>
-						<text>1356</text>
+						<text>{{item.collect_num}}</text>
 					</view>
 					<view class="li_box4_one">
 						<image src="../../static/images/pl.png" style="width: 32rpx;height: 28rpx;"></image>
-						<text>758</text>
+						<text>{{item.review_num}}</text>
 					</view>
 				</view>
 			</view>
@@ -82,3 +79,4 @@
 		</block>
 	</view>
 </view>
+<template is="htmlStatus" data="{{...htmlStatus}}" />

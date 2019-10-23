@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-		index_tab:['推荐','推荐','推荐','推荐','推荐'],
+    token: '',
+    btnkg:0,
+		index_tab:[],
     datalist:[],
 		cur:0,
 		array1:[1,1,1,],
@@ -30,6 +32,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      token:wx.getStorageSync('token')
+    })
     this.getIndextype()
   },
 
@@ -44,9 +49,35 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that =this
+    that.setData({
+      btnkg: 0,
+    })
+    if (that.data.cur != 1) {
+      that.getIndextype()
+    }
+    if(!that.data.token){
+      if (that.data.token!=wx.getStorageSync('token')){
+        this.setData({
+          token: wx.getStorageSync('token')
+        })
+        that.setData({
+          page: 1
+        })
+        that.getlist()
+      }
+    }
+    // that.getlist()
   },
-
+  retry(){
+    this.setData({
+      btnkg:0,
+      datalist: [],
+      page: 1
+    })
+    this.getIndextype()
+    // that.getlist()
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -65,6 +96,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    this.setData({
+      btnkg:0,
+    })
     this.getIndextype()
     
   },
@@ -105,14 +139,14 @@ Page({
             index_tab: res.data.data,
             page:1,
           })
-          if (res.data.data[0]){
+          if (res.data.data[that.data.cur]){
             that.setData({
-              array1: res.data.data[0].cate,
+              array1: res.data.data[that.data.cur].cate,
               index1:0
             })
-            if (res.data.data[0].cate[0]) {
+            if (res.data.data[that.data.cur].cate[0]) {
               that.setData({
-                array2: res.data.data[0].cate[0].attr,
+                array2: res.data.data[that.data.cur].cate[0].attr,
                 index2:0
               })
             }else{
@@ -127,7 +161,7 @@ Page({
               array1: that.data.array1
             })
           }
-          that.getlist()
+          that.getlist() 
         } else {
           htmlStatus1.error()
           wx.showToast({
@@ -150,6 +184,73 @@ Page({
         // wx.stopPullDownRefresh();
       }
     })
+  },
+  formSubmit_oo: function (e) {
+    console.log(e.detail.formId)
+    if (e.detail.formId != 'the formId is a mock one') {
+      wx.request({
+        url: app.IPurl + '/api/category/form_id',
+        data: {
+          token: wx.getStorageSync('token'),
+          formid: e.detail.formId,
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        dataType: 'json',
+        method: 'post',
+        success(res) {
+          console.log(res.data)
+          if (res.data.code == 1) {  //数据为空
+            console.log(res)
+          }
+        },
+        fail() {
+          wx.showToast({
+            icon: 'none',
+            title: '加载失败'
+          })
+
+        },
+        complete() {
+        }
+      })
+    }
+    
+  },
+  formSubmit_o: function (e) {
+    console.log(e.currentTarget.dataset)
+    this.index_tab_fuc(e)
+    if (e.detail.formId != 'the formId is a mock one') {
+      wx.request({
+        url: app.IPurl + '/api/category/form_id',
+        data: {
+          token: wx.getStorageSync('token'),
+          formid: e.detail.formId,
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        dataType: 'json',
+        method: 'post',
+        success(res) {
+          console.log(res.data)
+          if (res.data.code == 1) {  //数据为空
+            console.log(res)
+          }
+        },
+        fail() {
+          wx.showToast({
+            icon: 'none',
+            title: '加载失败'
+          })
+
+        },
+        complete() {
+        }
+      })
+    }
+    // console.log(e.detail, this.data.formIdString)
   },
   getlist() {
     ///api/category / category_column
@@ -179,7 +280,7 @@ Page({
         city: that.data.region[1],
         district: that.data.region[2],
         page:that.data.page,
-        pagesize:5,
+        pagesize:10,
         search:''
       },
       header: {
@@ -191,8 +292,8 @@ Page({
         htmlStatus1.finish()
         console.log(res.data)
         if (res.data.code == 1) {  //数据为空
-          if(that.data.page==1){
-            that.data.datalist=[]
+          if (that.data.page == 1) {
+            that.data.datalist = []
           }
           if (res.data.data.data.length>0){
             that.data.page++
@@ -202,17 +303,45 @@ Page({
               title: '到底了...',
             })
           }
+         
           that.data.datalist = that.data.datalist.concat(res.data.data.data)
           that.setData({
             datalist: that.data.datalist,
             page: that.data.page
           })
-        } else {
-          htmlStatus1.error()
+          if (that.data.datalist.length == 0) {
+            htmlStatus1.dataNull()
+          }
+        } else if (res.data.code == -1) {
+          that.setData({
+            datalist: [],
+            page: 1
+          })
           wx.showToast({
             icon: 'none',
-            title: '加载失败'
+            title: '请先登录账号'
           })
+          
+          htmlStatus1.dataNull()
+          setTimeout(function(){
+            wx.navigateTo({
+              url: '/pages/login/login',
+            })
+          },1000)
+        } else {
+          if(res.data.msg){
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          }else{
+            wx.showToast({
+              icon: 'none',
+              title: '加载失败'
+            })
+          }
+          htmlStatus1.error()
+          
 
         }
       },
@@ -231,7 +360,81 @@ Page({
     })
   },
 
+  //guanzhu
+  guanzhu(e){
+    var that =this
+    if (that.data.btnkg == 1) {
+      return
+    } else {
+      that.setData({
+        btnkg: 1
+      })
+    }
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+      return
+    }
+    
+    console.log(e.currentTarget.dataset.id)
+    var id = e.currentTarget.dataset.id
+    ///api/my/add_attention
+    wx.request({
+      url: app.IPurl + '/api/my/add_attention',
+      data: {
+        token: wx.getStorageSync('token'),
+        id: id,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+          
+          wx.showToast({
+            title: '操作成功',
+          })
+          setTimeout(function(){
+            that.setData({
+              btnkg: 0
+            })
+             that.retry() 
+          },1000)
+        } else {
+          that.setData({
+            btnkg: 0
+          })
+          if(res.data.msg){
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          }else{
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
 
+        }
+      },
+      fail() {
+        wx.showToast({
+          icon: 'none',
+          title: '操作失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
+  },
 
 
   index_tab_fuc(e){
@@ -275,9 +478,9 @@ Page({
         index2: 0,
         region:['','','']
 			})
-      if (res.data.data[value].cate[0]) {
+      if (that.data.index_tab[that.data.cur].cate[value]) {
         that.setData({
-          array2: res.data.data[value].cate[0].attr
+          array2: that.data.index_tab[that.data.cur].cate[value].attr
         })
       } else {
         that.data.array2 = []
@@ -299,7 +502,7 @@ Page({
   },
 	jump(e){
 	  var that =this
-	  clearInterval(that.data.intervalfuc)
+	  // clearInterval(that.data.intervalfuc)
 		app.jump(e)
 	},
   call(e) {

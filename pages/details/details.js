@@ -1,4 +1,5 @@
 // pages/details/details.js
+var htmlStatus = require('../../utils/htmlStatus/index.js')
 const app = getApp()
 Page({
 
@@ -6,25 +7,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-    index_tab: ['推荐', '推荐', '推荐', '推荐', '推荐'],
-    cur: 0,
-    array3: [
-      '../../static/images/img1.png', 
-      '../../static/images/img1.png', 
-      '../../static/images/img1.png',
-      '../../static/images/img1.png',
-      '../../static/images/img1.png',
-      '../../static/images/img1.png',
-    ],
+    btnkg:0,
+    xq_data:'',
+    datalist: [],
+    page:1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options.id)
+    this.setData({
+      id: options.id
+    })
   },
-
+  retry(){
+    this.setData({
+      btnkg:0,
+      page: 1,
+      datalist: []
+    })
+    this.getdata()
+    this.getlist()
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -36,7 +42,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      btnkg:0,
+      page: 1,
+      datalist: []
+    })
+    this.getdata()
+    this.getlist()
   },
 
   /**
@@ -57,16 +69,20 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
-    // 停止下拉动作
-    wx.stopPullDownRefresh();
+    this.setData({
+      btnkg:0,
+      page:1,
+      datalist:[]
+    })
+    this.getdata()
+    this.getlist()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getlist()
   },
 
   /**
@@ -75,31 +91,362 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindPickerChange: function (e) {
-    console.log(e.currentTarget.dataset.idx)
-    var type = e.currentTarget.dataset.idx
-    if (type == 1) {
-      this.setData({
-        index1: e.detail.value
-      })
-    } else if (type == 2) {
-      this.setData({
-        index2: e.detail.value
-      })
+  //xq
+  getdata() {
+    var that = this
+    
+    ///api/my/add_attention
+    wx.request({
+      url: app.IPurl + '/api/issue/show',
+      data: {
+        token: wx.getStorageSync('token'),
+        issue_id: that.data.id,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+
+         that.setData({
+           xq_data:res.data.data
+         })
+         
+        } else {
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '加载失败'
+            })
+          }
+        }
+      },
+      fail() {
+        wx.showToast({
+          icon: 'none',
+          title: '获取失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
+  },
+  //guanzhu
+  guanzhu(e) {
+    var that = this
+    if (that.data.btnkg == 1) {
+      return
     } else {
-      this.setData({
-        index3: e.detail.value
+      that.setData({
+        btnkg: 1
       })
     }
-    // console.log('picker发送选择改变，携带值为', e.detail.value)
-    // this.setData({
-    //   index: e.detail.value
-    // })
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+      return
+    }
+    console.log(e.currentTarget.dataset.id)
+    var id = e.currentTarget.dataset.id
+    ///api/my/add_attention
+    wx.request({
+      url: app.IPurl + '/api/my/add_attention',
+      data: {
+        token: wx.getStorageSync('token'),
+        id: id,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+
+          wx.showToast({
+            title: '操作成功',
+          })
+          setTimeout(function () {
+            that.setData({
+              btnkg:0
+            })
+            that.getdata()
+          }, 1000)
+        } else {
+          that.setData({
+            btnkg:0
+          })
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
+
+        }
+      },
+      fail() {
+        wx.showToast({
+          icon: 'none',
+          title: '操作失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
+  },
+  //dz
+  dianzan() {
+    var that = this
+    if (that.data.btnkg == 1) {
+      return
+    } else {
+      that.setData({
+        btnkg: 1
+      })
+    }
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+      return
+    }
+    ///api/my/add_attention
+    wx.request({
+      url: app.IPurl + '/api/my/add_praise',
+      data: {
+        token: wx.getStorageSync('token'),
+        id: that.data.xq_data.id,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+
+          wx.showToast({
+            title: '操作成功',
+          })
+          that.setData({
+            btnkg:0
+          })
+          that.getdata()
+        } else {
+          that.setData({
+            btnkg:0
+          })
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
+
+        }
+      },
+      fail() {
+        wx.showToast({
+          icon: 'none',
+          title: '操作失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
+  },
+
+  //sc
+  shoucan() {
+    var that = this
+    if (that.data.btnkg == 1) {
+      return
+    } else {
+      that.setData({
+        btnkg: 1
+      })
+    }
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+      return
+    }
+    ///api/my/add_attention
+    wx.request({
+      url: app.IPurl + '/api/my/add_collect',
+      data: {
+        token: wx.getStorageSync('token'),
+        id: that.data.xq_data.id,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+
+          wx.showToast({
+            title: '操作成功',
+          })
+          that.setData({
+            btnkg: 0
+          })
+          that.getdata()
+        } else {
+          that.setData({
+            btnkg: 0
+          })
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
+
+        }
+      },
+      fail() {
+        wx.showToast({
+          icon: 'none',
+          title: '操作失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
+  },
+  //get评论
+  getlist() {
+    var that = this
+    const htmlStatus1 = htmlStatus.default(that)
+    wx.request({
+      url: app.IPurl + '/api/comment/index',
+      data: {
+        token: wx.getStorageSync('token'),
+        id: that.data.id,
+        page: that.data.page
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        htmlStatus1.finish()
+        console.log(res.data)
+        if (res.data.code == 1) {  //数据为空
+          
+          if (res.data.data.data.length > 0) {
+            that.data.page++
+            if (that.data.page == 1) {
+              that.data.datalist = []
+            }
+          } else {
+            if (that.data.page == 1) {
+              
+            }else{
+              wx.showToast({
+                icon: 'none',
+                title: '暂无更多评论',
+              })
+            }
+            
+          }
+          that.data.datalist = that.data.datalist.concat(res.data.data.data)
+          that.setData({
+            datalist: that.data.datalist,
+            page: that.data.page
+          })
+          console.log(that.data.datalist.length)
+          if (that.data.datalist.length == 0) {
+            htmlStatus1.dataNull()
+          }
+        } else {
+          htmlStatus1.error()
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
+
+        }
+      },
+      fail() {
+        htmlStatus1.error()
+        wx.showToast({
+          icon: 'none',
+          title: '加载失败'
+        })
+
+      },
+      complete() {
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
   },
   jump(e) {
-    var that = this
-    clearInterval(that.data.intervalfuc)
+    // var that = this
+    // clearInterval(that.data.intervalfuc)
     app.jump(e)
+  },
+  jump1(e) {
+    // var that = this
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    } else {
+      app.jump(e)
+    }
   },
   pveimg(e) {
     var curr = e.currentTarget.dataset.src

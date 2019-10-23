@@ -5,7 +5,7 @@
     <view class='int_tit'>
       <text>*</text>请输入企业名称
     </view>
-    <input class='int_int' name="name"></input>
+    <input class='int_int' name="name" value="{{name}}"></input>
     
     <view class='int_tit'>
       <text>*</text>上传企业工商营业执照

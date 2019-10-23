@@ -1,0 +1,51 @@
+<!--pages/my_yjfk/yjfk.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
+<view class='container'>
+  <view class='yjfk_box'>
+    <view class="dy_list">
+      <view class="dy_li">
+        <view class="dy_t1">订阅行业</view>
+        <view class="dy_t1">订阅分类</view>
+        <view class="dy_t2">操作</view>
+      </view>
+      <block wx:for="{{index_tab}}" 
+				wx:for-index="idx" 
+				wx:for-item="item" 
+				wx:key="idx">
+        <block wx:for="{{item.cate}}" 
+				wx:for-index="idx1" 
+				wx:for-item="item1" 
+				wx:key="idx1">
+        <view class="dy_li" wx:if="{{item1.id!=0}}">
+          <view class="dy_t1">{{item.title}}</view>
+          <view class="dy_t1">{{item1.title}}</view>
+          <view class="dy_t2" data-type="1" data-id="{{item1.id}}" data-status="{{item1.status}}"
+          style="{{item1.status==1?'':'color:rgba(244,178,0,1)'}}"
+           catchtap="dyfuc">{{item1.status==1?'取消订阅':'订阅'}}</view>
+        </view>
+        </block>
+      </block>
+      
+    </view>
+    <picker mode="region" bindchange="bindPickerChange" data-idx='3' value="{{region}}" custom-item="{{customItem}}">
+      <view class="ib_1">
+      
+        <view class="ib_tit">订阅区域</view>
+        <!-- <picker mode="region" bindchange="bindPickerChange" data-idx='3' value="{{region}}" custom-item="{{customItem}}"> -->
+        <!-- <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}"> -->
+          <view class="ib_1_type">{{region[0]?region:'请选择地址'}}</view>
+        
+        <!-- <picker bindchange="bindPickerChange" data-idx='1' value="{{cur}}" range-key='title' range="{{index_tab}}">
+          <view class="ib_1_type">行业</view>
+        </picker>
+        
+        <picker bindchange="bindPickerChange" data-idx='2' value="{{index1}}" range-key='title' range="{{array1}}">
+          <view class="ib_1_type">分类</view>
+        </picker> -->
+      </view>
+    </picker>
+    <view class="btnbox">
+      <!-- <view class='sub_btn' catchtap='fabusub'>提交</view> -->
+    </view>
+  </view>
+</view>

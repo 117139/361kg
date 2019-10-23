@@ -1,4 +1,5 @@
 {
- "backgroundColor": "#fff",
- "navigationBarTitleText": "联系我们"
+  "backgroundColor": "#fff",
+  "navigationBarTitleText": "联系我们",
+  "enablePullDownRefresh": false
 }

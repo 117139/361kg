@@ -1,4 +1,4 @@
-// pages/my_sc/my_sc.js
+// pages/details/details.js
 var htmlStatus = require('../../utils/htmlStatus/index.js')
 const app = getApp()
 Page({
@@ -8,22 +8,28 @@ Page({
    */
   data: {
     btnkg:0,
+    xq_data:'',
     datalist: [],
-    page: 1,
-    type:1
+    page:1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(options.type){
-      this.setData({
-        type:options.type
-      })
-    }
+    console.log(options.id)
+    this.setData({
+      id: options.id
+    })
   },
-
+  retry(){
+    this.setData({
+      btnkg:0,
+      page: 1,
+      datalist: []
+    })
+    this.getlist()
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -36,18 +42,13 @@ Page({
    */
   onShow: function () {
     this.setData({
-      datalist: [],
+      btnkg:0,
       page: 1,
+      datalist: []
     })
     this.getlist()
   },
-  retry(){
-    this.setData({
-      datalist: [],
-      page: 1, 
-    })
-    this.getlist()
-  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -66,8 +67,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
-    this.retry()
+    this.setData({
+      btnkg:0,
+      page:1,
+      datalist:[]
+    })
+    this.getlist()
   },
 
   /**
@@ -83,50 +88,49 @@ Page({
   onShareAppMessage: function () {
 
   },
+  //get评论
   getlist() {
     var that = this
     const htmlStatus1 = htmlStatus.default(that)
-    var type=that.data.type
-    var dataurl
-    if (type==1){
-      dataurl = '/api/my/my_collect'
-    }else if(type==2){
-      dataurl = '/api/my/my_praise'
-    }else{
-      dataurl = '/api/my/my_browse'
-    }
     wx.request({
-      url: app.IPurl + dataurl,
+      url: app.IPurl + '/api/comment/more',
       data: {
-        token: wx.getStorageSync('token'),
-        page: that.data.page,
-        pagesize: 10,
+        // token: wx.getStorageSync('token'),
+        comment_id: that.data.id,
+        page: that.data.page
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       dataType: 'json',
-      method: 'post',
+      method: 'get',
       success(res) {
         htmlStatus1.finish()
         console.log(res.data)
         if (res.data.code == 1) {  //数据为空
-          if (that.data.page == 1) {
-            that.data.datalist = []
-          }
+          
           if (res.data.data.data.length > 0) {
             that.data.page++
+            if (that.data.page == 1) {
+              that.data.datalist = []
+            }
           } else {
-            wx.showToast({
-              icon: 'none',
-              title: '暂无更多内容',
-            })
+            if (that.data.page == 1) {
+              
+            }else{
+              wx.showToast({
+                icon: 'none',
+                title: '暂无更多评论',
+              })
+            }
+            
           }
           that.data.datalist = that.data.datalist.concat(res.data.data.data)
           that.setData({
             datalist: that.data.datalist,
             page: that.data.page
           })
+          console.log(that.data.datalist.length)
           if (that.data.datalist.length == 0) {
             htmlStatus1.dataNull()
           }
@@ -140,9 +144,10 @@ Page({
           } else {
             wx.showToast({
               icon: 'none',
-              title: '加载失败'
+              title: '操作失败'
             })
           }
+
         }
       },
       fail() {
@@ -159,85 +164,40 @@ Page({
       }
     })
   },
-  //guanzhu
-  guanzhu(e) {
-    var that = this
-    if (that.data.btnkg == 1) {
-      return
-    } else {
-      that.setData({
-        btnkg: 1
-      })
-    }
-    console.log(e.currentTarget.dataset.id)
-    var id = e.currentTarget.dataset.id
-    ///api/my/add_attention
-    wx.request({
-      url: app.IPurl + '/api/my/add_attention',
-      data: {
-        token: wx.getStorageSync('token'),
-        id: id,
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      dataType: 'json',
-      method: 'post',
-      success(res) {
-        console.log(res.data)
-        if (res.data.code == 1) {  //数据为空
-
-          wx.showToast({
-            title: '操作成功',
-          })
-          setTimeout(function () {
-            that.setData({
-              btnkg: 0
-            })
-            that.retry()
-          }, 1000)
-        } else {
-          that.setData({
-            btnkg: 0
-          })
-          if (res.data.msg) {
-            wx.showToast({
-              icon: 'none',
-              title: res.data.msg
-            })
-          } else {
-            wx.showToast({
-              icon: 'none',
-              title: '操作失败'
-            })
-          }
-
-        }
-      },
-      fail() {
-        wx.showToast({
-          icon: 'none',
-          title: '操作失败'
-        })
-
-      },
-      complete() {
-        // 停止下拉动作
-        wx.stopPullDownRefresh();
-      }
-    })
-  },
   jump(e) {
-    var that = this
-    clearInterval(that.data.intervalfuc)
+    // var that = this
+    // clearInterval(that.data.intervalfuc)
     app.jump(e)
   },
-  call(e) {
-    app.call(e)
+  jump1(e) {
+    // var that = this
+    if (!wx.getStorageSync('userInfo')) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    } else {
+      app.jump(e)
+    }
   },
   pveimg(e) {
     var curr = e.currentTarget.dataset.src
     var urls = e.currentTarget.dataset.array
     app.pveimg(curr, urls)
+  },
+  call(e) {
+    app.call(e)
+  },
+  topl(){
+    let query = wx.createSelectorQuery()
+    // let scrollTop = this.data.scrollTop
+    query.select('#xq_index').boundingClientRect((rect) => {
+      let top = rect.height
+      console.log(rect)
+      // 这里是关键
+      wx.pageScrollTo({
+        scrollTop: top,
+        duration: 0
+      })
+    }).exec()
   }
 })

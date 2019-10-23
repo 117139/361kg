@@ -7,6 +7,7 @@ Page({
    */
   data: {
     tel: '',
+    code:'',
     btnkg:0,
     time:0,
     setstate: 0,
@@ -247,7 +248,10 @@ Page({
 
 
               if (res.data.code == 1) {
-
+                that.setData({
+                  tel: '',
+                  code: ''
+                })
                 wx.showToast({
                   icon: 'none',
                   title: '提交成功',

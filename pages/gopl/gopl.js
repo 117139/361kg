@@ -7,6 +7,7 @@ Page({
    */
   data: {
     issue_id:'',
+    pid:-1,
 		content:'',
 		fw:0,
 		zy:0,
@@ -18,9 +19,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.issue_id){
+    if (options.id){
       this.setData({
-        issue_id: options.issue_id
+        issue_id: options.id
+      })
+    }
+    if (options.pid){
+      this.setData({
+        pid: options.pid
       })
     }
   },
@@ -94,53 +100,78 @@ Page({
 			})
 			return
 		}
-	
-		wx.request({
-      url: app.IPurl +'/api/comment/save',
-			data:{
-        content: that.data.content,
-        issue_id:that.data.issue_id,
-        "token": wx.getStorageSync('token')
-			},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded' 
-			},
-			dataType:'json',
-			method:'post',
-			success(res) {
-				console.log(res.data)
-				if(res.data.code==1){
-          wx.showToast({
-            icon: 'none',
-            title: '提交成功'
-          })
-          setTimeout(function(){
-           
-            wx.navigateBack()
-          },1000)
-				}else{
-          if (res.data.msg){
-            wx.showToast({
-              icon: 'none',
-              title: res.data.msg
-            })
+    wx.showModal({
+      title: '提示',
+      content: '是否提交该评论?',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          var data
+          if(that.data.pid!=-1){
+            data= {
+              content: that.data.content,
+              issue_id: that.data.issue_id,
+              "token": wx.getStorageSync('token'),
+              comment_id:that.data.pid
+            }
           }else{
-            wx.showToast({
-              icon: 'none',
-              title: '操作失败'
-            })
+            data = {
+              content: that.data.content,
+              issue_id: that.data.issue_id,
+              "token": wx.getStorageSync('token')
+            }
           }
-				}
-				
-			},
-			fail() {
-				wx.showToast({
-					icon:'none',
-					title:'操作失败'
-				})
-				 console.log('失败')
-			}
-		})
+          wx.request({
+            url: app.IPurl + '/api/comment/save',
+            data: data,
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            dataType: 'json',
+            method: 'post',
+            success(res) {
+              console.log(res.data)
+              if (res.data.code == 1) {
+                that.setData({
+                  content:''
+                })
+                wx.showToast({
+                  icon: 'none',
+                  title: '提交成功'
+                })
+                setTimeout(function () {
+
+                  wx.navigateBack()
+                }, 1000)
+              } else {
+                if (res.data.msg) {
+                  wx.showToast({
+                    icon: 'none',
+                    title: res.data.msg
+                  })
+                } else {
+                  wx.showToast({
+                    icon: 'none',
+                    title: '操作失败'
+                  })
+                }
+              }
+
+            },
+            fail() {
+              wx.showToast({
+                icon: 'none',
+                title: '操作失败'
+              })
+              console.log('失败')
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+		
 	}
 	
 })

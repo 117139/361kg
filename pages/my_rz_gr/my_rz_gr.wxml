@@ -5,11 +5,11 @@
     <view class='int_tit'>
       <text>*</text>请输入姓名
     </view>
-    <input class='int_int' name="name"></input>
+    <input class='int_int' name="name" value="{{name}}" maxlength="20"></input>
     <view class='int_tit'>
       <text>*</text>请输入身份证号
     </view>
-    <input class='int_int' name="idcard"></input>
+    <input class='int_int' name="idcard" value="{{idcard}}" maxlength="22"></input>
     <view class='int_tit'>
       <text>*</text>上传身份证件照
     </view>

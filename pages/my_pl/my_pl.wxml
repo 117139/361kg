@@ -1,4 +1,6 @@
 <!--pages/my_pl/my_pl.wxml-->
+<wxs src="../../utils/filter.wxs" module="filter" />
+<import src="/utils/htmlStatus/index.wxml" />
 <view class='cintainer'>
   <view class='pl_box' id="pl_box">
     <!-- <view class='pl_tit'>
@@ -6,25 +8,27 @@
       <view>点赞（88）</view>
     </view> -->
     <view class='pl_list'
-      wx:for="{{index_tab}}" 
+      wx:for="{{datalist}}" 
       wx:for-index="idx" 
       wx:for-item="item" 
       wx:key="idx">
       <view class="li_box1 li_box_my">
         <view class="li_tx_box">
-          <view class="li_tx_img">
-            <image src="../../static/images/tx.png"></image>
+          <view class="li_tx_img" data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
+            <image src="{{item.avatar}}"></image>
           </view>
-          <image class="li_user_rz" src="../../static/images/rz.png"></image>
-          <image class="li_user_rz" src="../../static/images/btn2.png"></image>
+          <image wx:if="{{item.company_status==1}}" class="li_user_rz" src="../../static/images/rz.png"></image>
+          <image wx:elif="{{item.person_status==1}}" class="li_user_rz" src="../../static/images/rz1.png"></image>
+          <image wx:else class="li_user_rz" src="../../static/images/rz0.png"></image>
         </view>
         <view class="li_user_msg">
-          <view class="lum_name">章鱼船长</view>
-          <view class="lum_inr">这款性能挺不错的，今天刚联系看过。</view>
-          <view class="lum_time">09-15  22:16</view>
+          <view class="lum_name">{{item.nickname}}</view>
+          <view class="lum_inr">{{item.content}}</view>
+          <view class="lum_time">{{item.create_time}}</view>
         </view>
         
       </view>
     </view>
   </view>
 </view>
+<template is="htmlStatus" data="{{...htmlStatus}}" />

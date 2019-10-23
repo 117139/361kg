@@ -3,7 +3,7 @@
 <view class='container'>
   <view class='yjfk_box'>
     <view class='fabu1_box2_sr'>
-      <textarea class='fbb2_sr_sr' bindinput="bint" placeholder='请输入反馈，我们将为您不断改进' maxlength='-1'></textarea>
+      <textarea class='fbb2_sr_sr' bindinput="bint" placeholder='请输入反馈，我们将为您不断改进' maxlength='-1' value="{{fbtext}}"></textarea>
 
     </view>
     <view class="imgbox">

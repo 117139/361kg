@@ -92,7 +92,7 @@ Page({
     wx.chooseImage({
       count: 9,
       sizeType: ['original', 'compressed'],
-      sourceType: ['camera'],
+      sourceType: ['album','camera'],
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         console.log(res)
@@ -148,10 +148,17 @@ Page({
           }
 
         } else {
-          wx.showToast({
-            icon: "none",
-            title: "上传失败"
-          })
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '加载失败'
+            })
+          }
         }
       }
     })
@@ -187,11 +194,11 @@ Page({
           imbox = imbox.join(',')
 
           wx.request({
-            url: app.IPurl + '/api/community/save',
+            url: app.IPurl + '/api/my/feedback',
             data: {
-              // "authorization": wx.getStorageSync('usermsg').user_token,
-              'body': that.data.fbtext,
-              'path': imbox,
+              token: wx.getStorageSync('token'),
+              content: that.data.fbtext,
+              pic: imbox,
             },
             // header: {
             // 	'content-type': 'application/x-www-form-urlencoded'
@@ -204,7 +211,10 @@ Page({
 
 
               if (res.data.code == 1) {
-
+                that.setData({
+                  fbtext:'',
+                  imgb:[]
+                })
                 wx.showToast({
                   icon: 'none',
                   title: '提交成功',

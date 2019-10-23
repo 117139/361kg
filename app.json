@@ -1,6 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/my_dzxx/yjfk",
+		"pages/plist/plist",
+    "pages/my_rz_gr/my_rz_gr",
+    "pages/my_rz_qy/my_rz_qy",
     "pages/fabu/fabu",
     "pages/fabu1/fabu1",
     "pages/my/my",
@@ -9,9 +13,7 @@
     "pages/details/details",
     "pages/gopl/gopl",
     "pages/my_tel/my_tel",
-    "pages/my_rz_qy/my_rz_qy",
     "pages/my_rz/my_rz",
-    "pages/my_rz_gr/my_rz_gr",
     "pages/sousuo/index",
     "pages/my_yjfk/yjfk",
     "pages/lxwm/lxwm",

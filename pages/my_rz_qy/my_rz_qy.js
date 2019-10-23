@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    name:'',
     imgb: [],
     imgb1: [],
   },
@@ -67,6 +68,7 @@ Page({
 
   },
   formSubmit: function (e) {
+    var that =this
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var f_data = e.detail.value
     if (f_data.name == "") {
@@ -97,11 +99,16 @@ Page({
           // imbox = imbox.join(',')
 
           wx.request({
-            url: app.IPurl + '/api/community/save',
-            data: f_data,
-            // header: {
-            // 	'content-type': 'application/x-www-form-urlencoded'
-            // },
+            url: app.IPurl + '/api/authentication/person_company',
+            data: {
+              type: 2,
+              token: wx.getStorageSync('token'),
+              company_auth_name: f_data.name,
+              company_auth_pic: f_data.sfz_z
+            },
+            header: {
+            	'content-type': 'application/x-www-form-urlencoded'
+            },
             dataType: 'json',
             method: 'POST',
             success(res) {
@@ -110,7 +117,11 @@ Page({
 
 
               if (res.data.code == 1) {
-
+                that.setData({
+                  name: '',
+                  imgb: [],
+                })
+                app.dologin1()
                 wx.showToast({
                   icon: 'none',
                   title: '提交成功',
@@ -163,9 +174,9 @@ Page({
       num = e.currentTarget.dataset.num
     }
     wx.chooseImage({
-      count: 9,
+      count: 1,
       sizeType: ['original', 'compressed'],
-      sourceType: ['camera'],
+      sourceType: ['album','camera'],
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         console.log(res)
