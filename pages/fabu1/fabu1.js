@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    btnkg:0,
     id:'',
     idlg:0,
     fbtext:'',
@@ -63,7 +64,9 @@ Page({
    */
   onShow: function () {
     this.setData({
-      retdata: wx.getStorageSync('retdata')
+      btnkg:0,
+      retdata: wx.getStorageSync('retdata'),
+      tel: wx.getStorageSync('retdata').phone
     })
   },
 
@@ -213,97 +216,114 @@ Page({
         return
       }
     }
-    wx.showModal({
+    if(that.data.btnkg==1){
+      return
+    }else{
+      that.setData({
+        btnkg:1
+      })
+    }
+    wx.showLoading({
+      title: '请稍后。。'
+    })
+
+    var imbox = that.data.imgb
+    imbox = imbox.join(',')
+    var ids = []
+    var id_arr = that.data.id_arr
+    for (var i = 0; i < id_arr.length; i++) {
+      if (id_arr[i] == 1) {
+        ids.push(that.data.attr[i].id)
+      }
+    }
+    ids = ids.join(',')
+    wx.request({
+      url: app.IPurl + '/api/issue/save',
+      data: {
+        token: wx.getStorageSync('token'),
+        attr_id: ids,
+        content: that.data.fbtext,
+        province: that.data.region[0],
+        city: that.data.region[1],
+        district: that.data.region[2],
+        phone: that.data.tel,
+        pic: imbox,
+        permission: that.data.index1,
+        valid_time: that.data.qx1[that.data.index2],
+        formId: fid
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'POST',
+      success(res) {
+        wx.hideLoading()
+        console.log(res.data)
+
+
+        if (res.data.code == 1) {
+
+          wx.showToast({
+            icon: 'none',
+            title: '提交成功',
+            duration: 2000
+          })
+          setTimeout(function () {
+            that.setData({
+              btnkg: 0
+            })
+            // wx.switchTab({
+            //   url: "/pages/shequ/shequ"
+            // })
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
+          }, 1000)
+
+        } else {
+          that.setData({
+            btnkg: 0
+          })
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
+        }
+
+
+      },
+      fail() {
+        that.setData({
+          btnkg: 0
+        })
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '操作失败'
+        })
+      }
+    })
+    /*wx.showModal({
       title: '提示',
       content: '是否发布该内容',
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
-          wx.showLoading({
-            title: '请稍后。。'
-          })
-
-          var imbox = that.data.imgb
-          imbox = imbox.join(',')
-          var ids = []
-          var id_arr = that.data.id_arr
-          for (var i = 0; i < id_arr.length;i++){
-            if (id_arr[i]==1){
-              ids.push(that.data.attr[i].id)
-            }
-          }
-          ids = ids.join(',')
-          wx.request({
-            url: app.IPurl + '/api/issue/save',
-            data: {
-              token: wx.getStorageSync('token'),
-              attr_id: ids,
-              content: that.data.fbtext,
-              province: that.data.region[0],
-              city: that.data.region[1],
-              district: that.data.region[2],
-              phone: that.data.tel,
-              pic: imbox,
-              permission: that.data.index1,
-              valid_time: that.data.qx1[that.data.index2],
-              formId:fid
-            },
-            header: {
-            	'content-type': 'application/x-www-form-urlencoded'
-            },
-            dataType: 'json',
-            method: 'POST',
-            success(res) {
-              wx.hideLoading()
-              console.log(res.data)
-
-
-              if (res.data.code == 1) {
-
-                wx.showToast({
-                  icon: 'none',
-                  title: '提交成功',
-                  duration: 2000
-                })
-                setTimeout(function () {
-                  // wx.switchTab({
-                  //   url: "/pages/shequ/shequ"
-                  // })
-                  wx.switchTab({
-                    url: '/pages/index/index',
-                  })
-                }, 1000)
-
-              } else {
-                if (res.data.msg) {
-                  wx.showToast({
-                    icon: 'none',
-                    title: res.data.msg
-                  })
-                } else {
-                  wx.showToast({
-                    icon: 'none',
-                    title: '操作失败'
-                  })
-                }
-              }
-
-
-            },
-            fail() {
-              wx.hideLoading()
-              wx.showToast({
-                icon: 'none',
-                title: '操作失败'
-              })
-            }
-          })
+          
 
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
-    })
+    })*/
   },
   getbq(e){
     console.log(e.currentTarget.dataset.idx)

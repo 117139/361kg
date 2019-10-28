@@ -276,6 +276,9 @@ page{
 .ml10{
 	margin-left: 10rpx;
 }
+ml20{
+  margin-left: 20rpx;  
+}
 .mr30{
 	margin-right: 30rpx;
 }

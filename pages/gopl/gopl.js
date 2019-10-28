@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    btnkg:0,
     issue_id:'',
     pid:-1,
 		content:'',
@@ -42,7 +43,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      btnkg: 0
+    })
   },
 
   /**
@@ -100,77 +103,93 @@ Page({
 			})
 			return
 		}
-    wx.showModal({
+    if (that.data.btnkg==1){
+      return
+    }else{
+      that.setData({
+        btnkg:1
+      })
+    }
+    var data
+    if (that.data.pid != -1) {
+      data = {
+        content: that.data.content,
+        issue_id: that.data.issue_id,
+        "token": wx.getStorageSync('token'),
+        comment_id: that.data.pid
+      }
+    } else {
+      data = {
+        content: that.data.content,
+        issue_id: that.data.issue_id,
+        "token": wx.getStorageSync('token')
+      }
+    }
+    wx.request({
+      url: app.IPurl + '/api/comment/save',
+      data: data,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      dataType: 'json',
+      method: 'post',
+      success(res) {
+        console.log(res.data)
+        if (res.data.code == 1) {
+          that.setData({
+            content: ''
+          })
+          wx.showToast({
+            icon: 'none',
+            title: '提交成功'
+          })
+          setTimeout(function () {
+            that.setData({
+              btnkg: 0
+            })
+            wx.navigateBack()
+          }, 1000)
+        } else {
+          that.setData({
+            btnkg: 0
+          })
+          if (res.data.msg) {
+            wx.showToast({
+              icon: 'none',
+              title: res.data.msg
+            })
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '操作失败'
+            })
+          }
+        }
+
+      },
+      fail() {
+        that.setData({
+          btnkg: 0
+        })
+        wx.showToast({
+          icon: 'none',
+          title: '操作失败'
+        })
+        console.log('失败')
+      }
+    })
+    /*wx.showModal({
       title: '提示',
       content: '是否提交该评论?',
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
-          var data
-          if(that.data.pid!=-1){
-            data= {
-              content: that.data.content,
-              issue_id: that.data.issue_id,
-              "token": wx.getStorageSync('token'),
-              comment_id:that.data.pid
-            }
-          }else{
-            data = {
-              content: that.data.content,
-              issue_id: that.data.issue_id,
-              "token": wx.getStorageSync('token')
-            }
-          }
-          wx.request({
-            url: app.IPurl + '/api/comment/save',
-            data: data,
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            dataType: 'json',
-            method: 'post',
-            success(res) {
-              console.log(res.data)
-              if (res.data.code == 1) {
-                that.setData({
-                  content:''
-                })
-                wx.showToast({
-                  icon: 'none',
-                  title: '提交成功'
-                })
-                setTimeout(function () {
-
-                  wx.navigateBack()
-                }, 1000)
-              } else {
-                if (res.data.msg) {
-                  wx.showToast({
-                    icon: 'none',
-                    title: res.data.msg
-                  })
-                } else {
-                  wx.showToast({
-                    icon: 'none',
-                    title: '操作失败'
-                  })
-                }
-              }
-
-            },
-            fail() {
-              wx.showToast({
-                icon: 'none',
-                title: '操作失败'
-              })
-              console.log('失败')
-            }
-          })
+          
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
-    })
+    })*/
 		
 	}
 	

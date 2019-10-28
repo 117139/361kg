@@ -28,7 +28,7 @@
             <view class="lum_inr">{{item.content}}</view>
             <view class="lum_time dis_flex ju_b aic">
               <text>{{item.create_time}}</text>
-              <!-- <text class="cF4B200" data-url="/pages/gopl/gopl?id={{xq_data.id}}&pid={{item.id}}" catchtap='jump1'>评论</text> -->
+              <text wx:if="{{item.delete==1}}" class="cF4B200 mr20" data-id="{{item.id}}" catchtap='delpl'>删除</text>
             </view>
             <view class="pl_hf" wx:if="{{item.child.length>0}}">
               <view class="li_user_msg" wx:for="{{item.child}}" 

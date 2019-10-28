@@ -42,23 +42,29 @@
   
 }
 .ib_1{
-	width: 100%;
+	/* width: 100%; */
 	/* margin-top: 30rpx;
 	margin-bottom: 22rpx; */
-	padding: 30rpx 32rpx 22rpx;
+	/* padding: 30rpx 32rpx 22rpx; */
+  padding: 22rpx 32rpx 22rpx;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	text-align: right;
   position: fixed;
   top:75rpx;
-  left: 0;
+  right: 0;
   z-index: 999;
-  background: #fff;
+  /* background: rgba(255, 255, 255, 0.8); */
+  background: rgba(255, 255, 255,1);
 }
 .ib_1 picker{
 	display: inline-block;
 	margin-left: 30rpx;
+}
+
+.ib_1 picker:nth-child(1){
+  margin-left:0;
 }
 .ib_1_type{
 	display: inline-block;

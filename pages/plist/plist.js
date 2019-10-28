@@ -88,6 +88,58 @@ Page({
   onShareAppMessage: function () {
 
   },
+  delpl(e) {
+    var that = this
+    console.log(e.currentTarget.dataset.id)
+    wx.showModal({
+      title: '提示',
+      content: '是否删除该评论',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.request({
+            url: app.IPurl + '/api/comment/delete',
+            data: {
+              "id": e.currentTarget.dataset.id,
+              token: wx.getStorageSync('token')
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            dataType: 'json',
+            method: 'post',
+            success(res) {
+
+              console.log(res.data)
+              if (res.data.code == 1) {                           //数据不为空
+
+                that.setData({
+                  page: 1,
+                  datalist: []
+                })
+                that.getlist()
+              } else {
+                wx.showToast({
+                  icon: 'none',
+                  title: '操作失败'
+                })
+              }
+            },
+            fail() {
+              wx.showToast({
+                icon: 'none',
+                title: '操作失败'
+              })
+            },
+            complete() { }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+
+  },
   //get评论
   getlist() {
     var that = this
@@ -95,7 +147,7 @@ Page({
     wx.request({
       url: app.IPurl + '/api/comment/more',
       data: {
-        // token: wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
         comment_id: that.data.id,
         page: that.data.page
       },
@@ -103,7 +155,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       dataType: 'json',
-      method: 'get',
+      method: 'post',
       success(res) {
         htmlStatus1.finish()
         console.log(res.data)

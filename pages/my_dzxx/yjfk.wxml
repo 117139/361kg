@@ -1,12 +1,18 @@
 <!--pages/my_yjfk/yjfk.wxml-->
 <wxs src="../../utils/filter.wxs" module="filter" />
-<view class='container'>
+<view v-if="{{index_tab.length>0}}" class='container'>
   <view class='yjfk_box'>
     <view class="dy_list">
       <view class="dy_li">
         <view class="dy_t1">订阅行业</view>
         <view class="dy_t1">订阅分类</view>
         <view class="dy_t2">操作</view>
+      </view>
+      <view class="dy_li">
+        <view class="dy_t1">全部</view>
+        <view class="dy_t1">全部</view>
+        <view class="dy_t2" data-type="1" data-id="all" data-status="{{allStatus}}"
+        style="{{allStatus==1?'':'color:rgba(244,178,0,1)'}}" catchtap="dyfuc">{{allStatus==1?'取消订阅':'全部订阅'}}</view>
       </view>
       <block wx:for="{{index_tab}}" 
 				wx:for-index="idx" 

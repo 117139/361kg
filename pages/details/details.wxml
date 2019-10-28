@@ -14,7 +14,7 @@
 						<image wx:elif="{{xq_data.person_status==1}}" class="li_user_rz" src="../../static/images/rz1.png"></image>
 						<image wx:else class="li_user_rz" src="../../static/images/rz0.png"></image>
         </view>
-        <view class="li_user_msg"  data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
+        <view class="li_user_msg"  data-url="/pages/my_index/index?id={{xq_data.user_id}}" catchtap='jump'>
           <view class="lum1">{{xq_data.nickname}}</view>
           <view class="lum2">{{xq_data.city}}</view>
         </view>
@@ -59,7 +59,10 @@
             <view class="lum_inr">{{item.content}}</view>
             <view class="lum_time dis_flex ju_b aic">
               <text>{{item.create_time}}</text>
-              <text class="cF4B200" data-url="/pages/gopl/gopl?id={{xq_data.id}}&pid={{item.id}}" catchtap='jump1'>评论</text>
+              <view class="dis_flex aic">
+                <text wx:if="{{item.delete==1}}" class="cF4B200 mr20" data-id="{{item.id}}" catchtap='delpl'>删除</text>
+                <text class="cF4B200 " data-url="/pages/gopl/gopl?id={{xq_data.id}}&pid={{item.id}}" catchtap='jump1'>评论</text>
+              </view>
             </view>
             <view class="pl_hf" wx:if="{{item.child.length>0}}">
               <view class="li_user_msg" wx:for="{{item.child}}" 
@@ -69,9 +72,14 @@
                 style="margin:15rpx 0;">
                 <view class="lum_name">{{item1.nickname}} <text class="c3">回复</text> {{item.nickname}}</view>
                 <view class="lum_inr" style="margin:5rpx 0;">{{item1.content}}</view>
-                <view class="lum_time">{{item1.create_time}}</view>
+                <view class="lum_time dis_flex ju_b aic">
+                  <text>{{item1.create_time}}</text>
+                  <view class="dis_flex aic">
+                    <text wx:if="{{item1.delete==1}}" data-id="{{item1.id}}" catchtap='delpl' class="cF4B200">删除</text>
+                  </view>
+                </view>
               </view>
-              <view class="fz26" style="color: rgba(60,115,190,1);" 
+              <view wx:if="{{item.child.length==4}}" class="fz26" style="color: rgba(60,115,190,1);" 
               data-url="/pages/plist/plist?id={{item.id}}" catchtap='jump'>查看更多>></view>
             </view>
             

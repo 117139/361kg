@@ -65,7 +65,7 @@
                       <image wx:elif="{{item.person_status==1}}" class="li_user_rz" src="../../static/images/rz1.png"></image>
                       <image wx:else class="li_user_rz" src="../../static/images/rz0.png"></image>
                     </view>
-                    <view class="li_user_msg" data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
+                    <view class="li_user_msg dis_flex" data-url="/pages/my_index/index?id={{item.user_id}}" catchtap='jump'>
                       <view class="lum1">{{item.nickname}}</view>
                       <view class="lum2">{{item.city}}</view>
                     </view>

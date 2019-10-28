@@ -10,6 +10,7 @@ Page({
     fbtext:'',
     imgb: [], 
     index_tab: [],
+    allStatus:0,
     cur: 0,
     array1: [1, 1, 1,],
     array2: [1, 1, 1,],
@@ -98,6 +99,7 @@ Page({
           that.data.index_tab= arr
           that.setData({
             index_tab: that.data.index_tab,
+            allStatus:res.data.all,
             region: [res.data.user.su_province, res.data.user.su_city, res.data.user.su_district]
           })
       

@@ -9,6 +9,7 @@
       <image wx:if="{{xq_data.company_status==1}}" class="rz_type" src="../../static/images/rz.png"></image>
 			<image wx:elif="{{xq_data.person_status==1}}" class="rz_type" src="../../static/images/rz1.png"></image>
 			<image wx:else class="rz_type" src="../../static/images/rz0.png"></image>
+      <view>ID:{{xq_data.user_id}}</view>
       </view>
       <!-- <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}"> -->
         <view class='mum2'>{{xq_data.city}} 
