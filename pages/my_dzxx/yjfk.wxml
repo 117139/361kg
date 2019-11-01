@@ -1,6 +1,10 @@
 <!--pages/my_yjfk/yjfk.wxml-->
 <wxs src="../../utils/filter.wxs" module="filter" />
 <view v-if="{{index_tab.length>0}}" class='container'>
+  <view class="gzggh">
+    <official-account></official-account>
+  </view>
+  
   <view class='yjfk_box'>
     <view class="dy_list">
       <view class="dy_li">
@@ -53,5 +57,11 @@
     <view class="btnbox">
       <!-- <view class='sub_btn' catchtap='fabusub'>提交</view> -->
     </view>
+  </view>
+  <view class="dyqgz">
+    <view>订阅前请先关注公众号</view>
+    <image src="{{ewm}}"
+      data-src="{{ewm}}"
+      catchtap='pveimg'></image>
   </view>
 </view>

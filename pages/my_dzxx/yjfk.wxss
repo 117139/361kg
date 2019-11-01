@@ -1,5 +1,12 @@
 /* pages/my_yjfk/yjfk.wxss */
-
+.gzggh{
+  width: 100%;
+}
+.dy_tip{
+  width: 100%;
+  background: #fff;
+  text-align: center
+}
 .yjfk_box{
   width: 100%;
   /* padding: 32rpx 0rpx 0; */
@@ -118,4 +125,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.dyqgz{
+  border-top: 1px solid #ddd;
+  background: #fff;
+  width: 100%;
+  text-align: center;
+  padding-top: 20rpx;
+  font-size: 30rpx;
+}
+.dyqgz image{
+  width: 500rpx;
+  height: 500rpx;
 }

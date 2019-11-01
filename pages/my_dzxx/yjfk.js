@@ -17,6 +17,7 @@ Page({
     index1: '',
     index2: '',
     region: ['', '', ''],
+    ewm:''
   },
 
   /**
@@ -24,6 +25,10 @@ Page({
    */
   onLoad: function (options) {
     var that =this
+    that.setData({
+      ewm:app.IPurl + 'static/uploads/wechat/ewm.jpg'
+    })
+   
     that.getIndextype()
   },
 
@@ -73,9 +78,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  /*onShareAppMessage: function () {
 
-  },
+  },*/
   getIndextype() {
     ///api/category / category_column
     var that = this
@@ -275,10 +280,17 @@ Page({
           if (res.data.code == 1) {  //数据为空
             that.getIndextype()
           } else {
-            wx.showToast({
-              icon: 'none',
-              title: '加载失败'
-            })
+            if(res.data.msg){
+              wx.showToast({
+                icon: 'none',
+                title: '加载失败'
+              })
+            }else{
+              wx.showToast({
+                icon: 'none',
+                title: '加载失败'
+              })
+            }
 
           }
         },
@@ -302,5 +314,14 @@ Page({
     
    
     
+  },
+  pveimg(e) {
+    var curr = e.currentTarget.dataset.src
+    var urls1=[]
+    urls1.push(curr)
+    wx.previewImage({
+      current: curr, // 当前显示图片的http链接
+      urls: urls1 // 需要预览的图片http链接列表
+    })
   }
 })
