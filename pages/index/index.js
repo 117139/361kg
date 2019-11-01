@@ -280,7 +280,7 @@ Page({
         city: that.data.region[1],
         district: that.data.region[2],
         page:that.data.page,
-        pagesize:10,
+        pagesize:20,
         search:''
       },
       header: {

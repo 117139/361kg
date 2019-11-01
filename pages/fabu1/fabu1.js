@@ -137,10 +137,10 @@ Page({
 
           that.setData({
             index_tab: res.data.data,
-            attr: res.data.data[0].attr
+            attr: res.data.data[that.data.cur].attr
           })
           var ids=[]
-          for (var i = 0; i < res.data.data[0].attr.length;i++){
+          for (var i = 0; i < res.data.data[that.data.cur].attr.length;i++){
             ids.push(0)
           }
           that.setData({
